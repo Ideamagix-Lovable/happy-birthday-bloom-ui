@@ -2,57 +2,23 @@ import React, { useState } from 'react';
 import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, Gift, ChefHat } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const DispatchDashboard = () => {
-  const [weeklyStats, setWeeklyStats] = useState([5, 8, 12, 6, 9, 15, 7]);
+  const [weeklyStats, setWeeklyStats] = useState([
+    { day: 'Sun', cakes: 5 },
+    { day: 'Mon', cakes: 8 },
+    { day: 'Tue', cakes: 12 },
+    { day: 'Wed', cakes: 6 },
+    { day: 'Thu', cakes: 9 },
+    { day: 'Fri', cakes: 15 },
+    { day: 'Sat', cakes: 7 }
+  ]);
   const [recentActivity, setRecentActivity] = useState([
     { id: 1, description: 'New dispatch created for Rajesh Kumar', time: '2 mins ago' },
     { id: 2, description: 'Shipment dispatched via Blue Dart', time: '15 mins ago' },
     { id: 3, description: 'Cultivator Priya Devi approved dispatch', time: '30 mins ago' },
   ]);
-
-  const chartData = {
-    labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    datasets: [
-      {
-        label: 'Cakes Dispatched',
-        data: weeklyStats,
-        backgroundColor: '#b33324',
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Weekly Cake Dispatch Statistics',
-      },
-    },
-  };
 
   const handleGenerateKitchenReport = () => {
     // Navigate to kitchen report detail page
@@ -125,7 +91,16 @@ const DispatchDashboard = () => {
             <CardDescription>A summary of dispatch activities this week</CardDescription>
           </CardHeader>
           <CardContent>
-            <Bar options={chartOptions} data={chartData} />
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={weeklyStats}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="cakes" fill="#b33324" name="Cakes Dispatched" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
