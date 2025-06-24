@@ -310,9 +310,11 @@ const DispatchQueue = () => {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm">
-                          <Edit className="w-4 h-4" />
-                        </Button>
+                        <Link to={`/birthday/queue/edit/${item.id}`}>
+                          <Button variant="ghost" size="sm">
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                        </Link>
                         <Button variant="ghost" size="sm" className="text-green-600">
                           <Check className="w-4 h-4" />
                         </Button>
@@ -356,9 +358,11 @@ const DispatchQueue = () => {
                     <div>Total Cost: ₹{(lotItems.length * 350).toLocaleString()}</div>
                     <div>Date: {lotItems[0]?.dispatchDate}</div>
                   </div>
-                  <Button size="sm" variant="outline" className="mt-2 w-full">
-                    View Details
-                  </Button>
+                  <Link to={`/birthday/lot/${lotNumber}`}>
+                    <Button size="sm" variant="outline" className="mt-2 w-full">
+                      View Details
+                    </Button>
+                  </Link>
                 </div>
               );
             })}
