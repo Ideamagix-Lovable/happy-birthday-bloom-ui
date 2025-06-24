@@ -1,10 +1,24 @@
+
 import React, { useState } from 'react';
 import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, Gift, ChefHat } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 const DispatchDashboard = () => {
+  const { toast } = useToast();
   const [weeklyStats, setWeeklyStats] = useState([
     { day: 'Sun', cakes: 5 },
     { day: 'Mon', cakes: 8 },
@@ -21,13 +35,35 @@ const DispatchDashboard = () => {
   ]);
 
   const handleGenerateKitchenReport = () => {
+    toast({
+      title: "Kitchen Report Generated",
+      description: "The kitchen requirements report has been successfully generated.",
+    });
     // Navigate to kitchen report detail page
     window.location.href = '/birthday/kitchen-report';
   };
 
   const handleGenerateCultivatorReport = () => {
+    toast({
+      title: "Cultivator Report Generated", 
+      description: "The cultivator assignment and approval report has been successfully generated.",
+    });
     // Navigate to cultivator report page
     window.location.href = '/birthday/cultivator-report';
+  };
+
+  const handleBulkDispatch = () => {
+    toast({
+      title: "Bulk Dispatch Initiated",
+      description: "Bulk dispatch process has been started for pending orders.",
+    });
+  };
+
+  const handleEmergencyDispatch = () => {
+    toast({
+      title: "Emergency Dispatch Created",
+      description: "Emergency dispatch has been prioritized and assigned to fastest courier.",
+    });
   };
 
   return (
@@ -128,6 +164,93 @@ const DispatchDashboard = () => {
         </Card>
       </div>
 
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Card className="cursor-pointer hover:shadow-md transition-shadow">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <Package className="w-8 h-8 text-[#b33324]" />
+                  <div>
+                    <h3 className="font-medium">Bulk Dispatch</h3>
+                    <p className="text-sm text-gray-600">Process multiple orders</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Confirm Bulk Dispatch</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will initiate bulk dispatch for all pending orders. Are you sure you want to proceed?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleBulkDispatch} className="bg-[#b33324] hover:bg-[#b33324]/90">
+                Proceed
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Card className="cursor-pointer hover:shadow-md transition-shadow">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <Bell className="w-8 h-8 text-red-500" />
+                  <div>
+                    <h3 className="font-medium">Emergency Dispatch</h3>
+                    <p className="text-sm text-gray-600">Urgent priority orders</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Create Emergency Dispatch</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will create an emergency dispatch with highest priority. This action will override normal queue processing.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleEmergencyDispatch} className="bg-red-600 hover:bg-red-700">
+                Create Emergency Dispatch
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <Card className="cursor-pointer hover:shadow-md transition-shadow">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <Calendar className="w-8 h-8 text-blue-500" />
+              <div>
+                <h3 className="font-medium">Schedule Dispatch</h3>
+                <p className="text-sm text-gray-600">Plan future deliveries</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="cursor-pointer hover:shadow-md transition-shadow">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <Settings className="w-8 h-8 text-gray-500" />
+              <div>
+                <h3 className="font-medium">Settings</h3>
+                <p className="text-sm text-gray-600">Configure dispatch rules</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Action Buttons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
@@ -141,12 +264,27 @@ const DispatchDashboard = () => {
             <p className="text-sm text-gray-600 mb-4">
               Generate detailed kitchen requirements report for cake preparation
             </p>
-            <Button 
-              onClick={handleGenerateKitchenReport}
-              className="w-full bg-[#b33324] hover:bg-[#b33324]/90"
-            >
-              Generate Kitchen Report
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button className="w-full bg-[#b33324] hover:bg-[#b33324]/90">
+                  Generate Kitchen Report
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Generate Kitchen Report</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will generate a comprehensive kitchen requirements report including ingredient lists, preparation schedules, and resource allocation.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleGenerateKitchenReport} className="bg-[#b33324] hover:bg-[#b33324]/90">
+                    Generate Report
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardContent>
         </Card>
 
@@ -161,12 +299,27 @@ const DispatchDashboard = () => {
             <p className="text-sm text-gray-600 mb-4">
               Generate cultivator assignment and approval report
             </p>
-            <Button 
-              onClick={handleGenerateCultivatorReport}
-              className="w-full bg-[#b33324] hover:bg-[#b33324]/90"
-            >
-              Generate Cultivator Report
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button className="w-full bg-[#b33324] hover:bg-[#b33324]/90">
+                  Generate Cultivator Report
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Generate Cultivator Report</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will generate a detailed report on cultivator assignments, approval rates, and performance metrics.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleGenerateCultivatorReport} className="bg-[#b33324] hover:bg-[#b33324]/90">
+                    Generate Report
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardContent>
         </Card>
       </div>
