@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gift, Calendar, Package, FileText } from "lucide-react";
+import { Gift, Calendar, Package, FileText, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -20,8 +20,10 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Hare Krishna, Nayan Morel</span>
-              <div className="w-8 h-8 bg-[#f3b01b] rounded-full"></div>
+              <span className="text-sm text-gray-600">Hare Krishna</span>
+              <div className="w-8 h-8 bg-[#b33324] rounded-full flex items-center justify-center">
+                <User className="w-4 h-4 text-white" />
+              </div>
             </div>
           </div>
         </div>
@@ -31,7 +33,7 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Management Information System</h1>
-          <p className="text-lg text-gray-600">Welcome to ISKCON Bhiwandi MIS Dashboard</p>
+          <p className="text-lg text-gray-600">Welcome to ISKCON Bhiwandi Donor Management System</p>
         </div>
 
         {/* Quick Actions */}
@@ -65,39 +67,39 @@ const Index = () => {
               <CardHeader className="text-center">
                 <Gift className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
                 <CardTitle className="text-lg text-[#b33324]">Birthday Dispatch</CardTitle>
-                <CardDescription>Manage birthday cake dispatches</CardDescription>
+                <CardDescription>Comprehensive birthday cake dispatch module</CardDescription>
               </CardHeader>
             </Card>
           </Link>
         </div>
 
         {/* Featured Module */}
-        <Card className="bg-gradient-to-r from-[#b33324]/10 to-[#f3b01b]/10 border-[#b33324]">
+        <Card className="bg-gradient-to-r from-[#b33324]/10 to-[#b33324]/5 border-[#b33324]">
           <CardHeader>
             <CardTitle className="text-2xl text-[#b33324] flex items-center">
               <Gift className="w-6 h-6 mr-3" />
               Birthday Dispatch Module
             </CardTitle>
             <CardDescription className="text-lg">
-              Streamline birthday cake dispatches with automated workflow management
+              Complete birthday cake dispatch management with automated workflow, tracking, and reporting
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="text-center">
+              <div className="text-center p-4">
                 <Calendar className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
-                <h4 className="font-semibold">Birthday Planning</h4>
-                <p className="text-sm text-gray-600">Track upcoming birthdays with lead time management</p>
+                <h4 className="font-semibold">Planning & Dashboard</h4>
+                <p className="text-sm text-gray-600">Comprehensive planning reports with lead time management and real-time analytics</p>
               </div>
-              <div className="text-center">
+              <div className="text-center p-4">
                 <Package className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
                 <h4 className="font-semibold">Dispatch Management</h4>
-                <p className="text-sm text-gray-600">Automated dispatch workflow with Shiprocket integration</p>
+                <p className="text-sm text-gray-600">Queue management, courier integration, and shipment tracking with ShipRocket API</p>
               </div>
-              <div className="text-center">
+              <div className="text-center p-4">
                 <FileText className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
-                <h4 className="font-semibold">Reports & Analytics</h4>
-                <p className="text-sm text-gray-600">Comprehensive reporting with delivery tracking</p>
+                <h4 className="font-semibold">Master File & Reports</h4>
+                <p className="text-sm text-gray-600">Complete data management with upload functionality and monthly reporting</p>
               </div>
             </div>
             <div className="text-center">
