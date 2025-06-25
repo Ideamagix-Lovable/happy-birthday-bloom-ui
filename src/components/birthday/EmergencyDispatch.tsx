@@ -161,9 +161,9 @@ const EmergencyDispatch = () => {
                     <SelectValue placeholder="Select urgency" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="critical">Critical (< 6 hours)</SelectItem>
-                    <SelectItem value="high">High (< 12 hours)</SelectItem>
-                    <SelectItem value="medium">Medium (< 24 hours)</SelectItem>
+                    <SelectItem value="critical">Critical (&lt; 6 hours)</SelectItem>
+                    <SelectItem value="high">High (&lt; 12 hours)</SelectItem>
+                    <SelectItem value="medium">Medium (&lt; 24 hours)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
