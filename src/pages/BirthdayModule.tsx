@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Calendar, Package, FileText, Users, Settings, Home, Bell, User } from 'lucide-react';
+import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, BarChart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PlanningReport from '@/components/birthday/PlanningReport';
 import DispatchDashboard from '@/components/birthday/DispatchDashboard';
@@ -8,6 +8,7 @@ import CustomDispatch from '@/components/birthday/CustomDispatch';
 import DispatchQueue from '@/components/birthday/DispatchQueue';
 import ShipmentTracker from '@/components/birthday/ShipmentTracker';
 import MasterFile from '@/components/birthday/MasterFile';
+import BirthdayReportTabs from '@/components/birthday/BirthdayReportTabs';
 
 const BirthdayModule = () => {
   const [activeTab, setActiveTab] = useState('planning');
@@ -71,7 +72,7 @@ const BirthdayModule = () => {
 
         {/* Module Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 bg-white border border-gray-200">
+          <TabsList className="grid w-full grid-cols-7 bg-white border border-gray-200">
             <TabsTrigger 
               value="planning" 
               className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
@@ -108,6 +109,13 @@ const BirthdayModule = () => {
               <span>Shipment Tracker</span>
             </TabsTrigger>
             <TabsTrigger 
+              value="reports" 
+              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
+            >
+              <BarChart className="w-4 h-4" />
+              <span>Reports</span>
+            </TabsTrigger>
+            <TabsTrigger 
               value="master" 
               className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
             >
@@ -134,6 +142,10 @@ const BirthdayModule = () => {
 
           <TabsContent value="tracker" className="mt-6">
             <ShipmentTracker />
+          </TabsContent>
+
+          <TabsContent value="reports" className="mt-6">
+            <BirthdayReportTabs />
           </TabsContent>
 
           <TabsContent value="master" className="mt-6">
