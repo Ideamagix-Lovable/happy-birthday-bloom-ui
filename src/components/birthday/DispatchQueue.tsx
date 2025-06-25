@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, Calendar, User, Truck, Edit, Check, X, Filter, Download } from 'lucide-react';
@@ -8,11 +7,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 const DispatchQueue = () => {
   const [lotFilter, setLotFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [courierFilter, setCourierFilter] = useState('all');
+  const { toast } = useToast();
 
   const mockQueueData = [
     {
@@ -115,11 +117,17 @@ const DispatchQueue = () => {
   };
 
   const handleBulkApprove = () => {
-    alert('Bulk approval initiated for selected items');
+    toast({
+      title: "Bulk Approval Completed",
+      description: "Selected items have been approved and moved to dispatch queue.",
+    });
   };
 
   const handleShipRocketSync = () => {
-    alert('Syncing with ShipRocket API...');
+    toast({
+      title: "ShipRocket Sync Initiated", 
+      description: "Syncing with ShipRocket API to update tracking information...",
+    });
   };
 
   return (
@@ -177,14 +185,52 @@ const DispatchQueue = () => {
               Dispatch Queue Management
             </CardTitle>
             <div className="flex items-center space-x-2">
-              <Button onClick={handleBulkApprove} className="bg-[#b33324] hover:bg-[#b33324]/90">
-                <Check className="w-4 h-4 mr-2" />
-                Bulk Approve
-              </Button>
-              <Button onClick={handleShipRocketSync} variant="outline">
-                <Truck className="w-4 h-4 mr-2" />
-                Sync ShipRocket
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="bg-[#b33324] hover:bg-[#b33324]/90">
+                    <Check className="w-4 h-4 mr-2" />
+                    Bulk Approve
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Confirm Bulk Approval</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to approve all selected items in the dispatch queue? This will move them to the shipment ready status.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleBulkApprove} className="bg-[#b33324] hover:bg-[#b33324]/90">
+                      Approve All
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">
+                    <Truck className="w-4 h-4 mr-2" />
+                    Sync ShipRocket
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Sync with ShipRocket</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will sync all pending orders with ShipRocket API and update tracking information. This process may take a few minutes.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleShipRocketSync} className="bg-blue-600 hover:bg-blue-700">
+                      Start Sync
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              
               <Button variant="outline">
                 <Download className="w-4 h-4 mr-2" />
                 Export

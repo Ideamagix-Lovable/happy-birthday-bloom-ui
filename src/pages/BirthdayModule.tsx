@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, BarChart } from 'lucide-react';
+import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, BarChart, List, Truck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PlanningReport from '@/components/birthday/PlanningReport';
 import DispatchDashboard from '@/components/birthday/DispatchDashboard';
@@ -9,13 +9,14 @@ import DispatchQueue from '@/components/birthday/DispatchQueue';
 import ShipmentTracker from '@/components/birthday/ShipmentTracker';
 import MasterFile from '@/components/birthday/MasterFile';
 import BirthdayReportTabs from '@/components/birthday/BirthdayReportTabs';
+import BirthdayListView from '@/components/birthday/BirthdayListView';
 
 const BirthdayModule = () => {
-  const [activeTab, setActiveTab] = useState('planning');
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   return (
-    <div className="min-h-screen bg-gray-50" style={{ fontFamily: 'Geologica, sans-serif' }}>
-      {/* Header Navigation - Based on your reference image */}
+    <div className="min-h-screen bg-gray-50" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+      {/* Header Navigation */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-full mx-auto px-4">
           <div className="flex items-center justify-between h-16">
@@ -31,10 +32,13 @@ const BirthdayModule = () => {
 
               {/* Navigation Menu */}
               <nav className="hidden md:flex items-center space-x-8">
-                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Admin</a>
-                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Senior Management</a>
-                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Department Head</a>
-                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Users</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Dashboard</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Birthday List</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Planning Report</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Custom Dispatch</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Dispatch Queue</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Shipment Tracker</a>
+                <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Master File</a>
               </nav>
             </div>
 
@@ -72,20 +76,27 @@ const BirthdayModule = () => {
 
         {/* Module Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-7 bg-white border border-gray-200">
-            <TabsTrigger 
-              value="planning" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Planning Report</span>
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-8 bg-white border border-gray-200">
             <TabsTrigger 
               value="dashboard" 
               className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
             >
               <Home className="w-4 h-4" />
               <span>Dashboard</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="birthday-list" 
+              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
+            >
+              <List className="w-4 h-4" />
+              <span>Birthday List</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="planning" 
+              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Planning Report</span>
             </TabsTrigger>
             <TabsTrigger 
               value="custom" 
@@ -105,7 +116,7 @@ const BirthdayModule = () => {
               value="tracker" 
               className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
             >
-              <Package className="w-4 h-4" />
+              <Truck className="w-4 h-4" />
               <span>Shipment Tracker</span>
             </TabsTrigger>
             <TabsTrigger 
@@ -124,12 +135,16 @@ const BirthdayModule = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="planning" className="mt-6">
-            <PlanningReport />
-          </TabsContent>
-
           <TabsContent value="dashboard" className="mt-6">
             <DispatchDashboard />
+          </TabsContent>
+
+          <TabsContent value="birthday-list" className="mt-6">
+            <BirthdayListView />
+          </TabsContent>
+
+          <TabsContent value="planning" className="mt-6">
+            <PlanningReport />
           </TabsContent>
 
           <TabsContent value="custom" className="mt-6">

@@ -1,369 +1,456 @@
-
 import React, { useState } from 'react';
-import { Calendar, Filter, Search, Download, Eye, Edit, Check, X, User, AlertCircle } from 'lucide-react';
+import { Search, Filter, Download, Check, X, Eye, Calendar, MapPin, Phone, User, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Link } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 const BirthdayPlanningList = () => {
-  const [filters, setFilters] = useState({
-    dateRange: '',
-    city: 'all',
-    eligibility: 'all',
-    dispatchStatus: 'all',
-    cultivatorStatus: 'all',
-    searchTerm: ''
-  });
+  const [dateRange, setDateRange] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const { toast } = useToast();
 
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  const mockPlanningData = [
+  const mockData = [
     {
-      id: 'BD001',
       icsId: 'ICS001',
       dmsId: 'DMS001',
       name: 'Rajesh Kumar Sharma',
       phone: '+91-9876543210',
       dob: '1985-06-28',
-      address: '123 MG Road, Andheri West, Mumbai - 400058, Maharashtra, India',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400058',
+      address: '123 MG Road, Andheri West, Mumbai, Maharashtra, 400001',
       communicationPref: 'WhatsApp',
-      familyDonation: 25000,
+      familyDonation: 85000,
       leadTimeCategory: 'IMUM',
-      leadTime: 4,
-      dispatchStatus: 'Approved',
+      dispatchStatus: 'Eligible',
       cultivatorStatus: 'Approved',
       eligibilityStatus: 'Eligible',
-      cakeDispatchCount: 2,
-      historicalCount: 5,
+      cakeDispatchCount: 3,
       firstDonation: '2020-01-15',
       lastDonation: '2024-05-20',
       zoomPooja: 'Yes',
-      wishesVideo: 'Sent',
-      cultivator: 'Priya Devi',
-      highlight: 'green'
+      wishesVideo: 'Pending'
     },
     {
-      id: 'BD002',
       icsId: 'ICS002',
       dmsId: 'DMS002',
-      name: 'Priya Sharma',
+      name: 'Priya Patel',
       phone: '+91-9876543211',
-      dob: '1990-06-25',
-      address: '456 CP Street, New Delhi - 110001, Delhi, India',
-      city: 'Delhi',
-      state: 'Delhi',
-      pincode: '110001',
-      communicationPref: 'SMS',
-      familyDonation: 12000,
-      leadTimeCategory: 'ROI',
-      leadTime: 7,
+      dob: '1992-07-15',
+      address: '456 Linking Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'Email',
+      familyDonation: 45000,
+      leadTimeCategory: 'IMUM',
       dispatchStatus: 'Pending',
-      cultivatorStatus: 'Pending Confirmation',
+      cultivatorStatus: 'Pending',
       eligibilityStatus: 'Eligible',
       cakeDispatchCount: 1,
-      historicalCount: 3,
       firstDonation: '2021-03-10',
-      lastDonation: '2024-04-15',
+      lastDonation: '2024-06-01',
       zoomPooja: 'No',
-      wishesVideo: 'Pending',
-      cultivator: 'Sunil Das',
-      highlight: 'yellow'
+      wishesVideo: 'Completed'
     },
     {
-      id: 'BD003',
       icsId: 'ICS003',
       dmsId: 'DMS003',
-      name: 'Sunil Gupta',
+      name: 'Amit Singh',
       phone: '+91-9876543212',
-      dob: '1988-06-24',
-      address: '789 Park Street, Mumbai - 400002, Maharashtra, India',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400002',
-      communicationPref: 'Email',
-      familyDonation: 8000,
+      dob: '1978-08-01',
+      address: '789 Marine Drive, Churchgate, Mumbai, Maharashtra, 400020',
+      communicationPref: 'Call',
+      familyDonation: 120000,
       leadTimeCategory: 'IMUM',
-      leadTime: 4,
-      dispatchStatus: 'Missed',
-      cultivatorStatus: 'Do Not Send',
-      eligibilityStatus: 'Ineligible',
-      cakeDispatchCount: 0,
-      historicalCount: 2,
-      firstDonation: '2022-01-05',
-      lastDonation: '2024-02-10',
+      dispatchStatus: 'Eligible',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 5,
+      firstDonation: '2019-11-22',
+      lastDonation: '2024-04-15',
       zoomPooja: 'Yes',
-      wishesVideo: 'Not Sent',
-      cultivator: 'Ravi Kumar',
-      highlight: 'red'
+      wishesVideo: 'Pending'
+    },
+    {
+      icsId: 'ICS004',
+      dmsId: 'DMS004',
+      name: 'Sneha Desai',
+      phone: '+91-9876543213',
+      dob: '1995-09-10',
+      address: '321 Juhu Tara Road, Juhu, Mumbai, Maharashtra, 400049',
+      communicationPref: 'WhatsApp',
+      familyDonation: 60000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Pending',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 2,
+      firstDonation: '2022-05-01',
+      lastDonation: '2024-05-25',
+      zoomPooja: 'No',
+      wishesVideo: 'Completed'
+    },
+    {
+      icsId: 'ICS005',
+      dmsId: 'DMS005',
+      name: 'Vikram Khanna',
+      phone: '+91-9876543214',
+      dob: '1982-10-18',
+      address: '555 Linking Road, Khar West, Mumbai, Maharashtra, 400052',
+      communicationPref: 'Email',
+      familyDonation: 95000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Eligible',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 4,
+      firstDonation: '2020-09-18',
+      lastDonation: '2024-06-10',
+      zoomPooja: 'Yes',
+      wishesVideo: 'Pending'
+    },
+    {
+      icsId: 'ICS006',
+      dmsId: 'DMS006',
+      name: 'Divya Iyer',
+      phone: '+91-9876543215',
+      dob: '1990-11-25',
+      address: '666 SV Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'Call',
+      familyDonation: 50000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Pending',
+      cultivatorStatus: 'Pending',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 0,
+      firstDonation: '2023-01-01',
+      lastDonation: '2024-06-15',
+      zoomPooja: 'No',
+      wishesVideo: 'Completed'
+    },
+    {
+      icsId: 'ICS007',
+      dmsId: 'DMS007',
+      name: 'Rohan Mehra',
+      phone: '+91-9876543216',
+      dob: '1988-12-02',
+      address: '777 Carter Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'WhatsApp',
+      familyDonation: 75000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Eligible',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 3,
+      firstDonation: '2021-07-04',
+      lastDonation: '2024-05-30',
+      zoomPooja: 'Yes',
+      wishesVideo: 'Pending'
+    },
+    {
+      icsId: 'ICS008',
+      dmsId: 'DMS008',
+      name: 'Anjali Verma',
+      phone: '+91-9876543217',
+      dob: '1993-01-08',
+      address: '888 Hill Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'Email',
+      familyDonation: 55000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Pending',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 1,
+      firstDonation: '2022-11-11',
+      lastDonation: '2024-06-20',
+      zoomPooja: 'No',
+      wishesVideo: 'Completed'
+    },
+    {
+      icsId: 'ICS009',
+      dmsId: 'DMS009',
+      name: 'Kunal Kapoor',
+      phone: '+91-9876543218',
+      dob: '1980-02-14',
+      address: '999 Turner Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'Call',
+      familyDonation: 110000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Eligible',
+      cultivatorStatus: 'Approved',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 6,
+      firstDonation: '2018-05-05',
+      lastDonation: '2024-04-25',
+      zoomPooja: 'Yes',
+      wishesVideo: 'Pending'
+    },
+    {
+      icsId: 'ICS010',
+      dmsId: 'DMS010',
+      name: 'Shweta Reddy',
+      phone: '+91-9876543219',
+      dob: '1991-03-22',
+      address: '1010 Perry Cross Road, Bandra West, Mumbai, Maharashtra, 400050',
+      communicationPref: 'WhatsApp',
+      familyDonation: 65000,
+      leadTimeCategory: 'IMUM',
+      dispatchStatus: 'Pending',
+      cultivatorStatus: 'Pending',
+      eligibilityStatus: 'Eligible',
+      cakeDispatchCount: 2,
+      firstDonation: '2023-03-15',
+      lastDonation: '2024-06-25',
+      zoomPooja: 'No',
+      wishesVideo: 'Completed'
     }
   ];
 
-  const getRowHighlight = (highlight) => {
-    const colors = {
-      'green': 'bg-green-50 hover:bg-green-100 border-l-4 border-l-green-500',
-      'yellow': 'bg-yellow-50 hover:bg-yellow-100 border-l-4 border-l-yellow-500',
-      'red': 'bg-red-50 hover:bg-red-100 border-l-4 border-l-red-500'
-    };
-    return colors[highlight] || 'hover:bg-gray-50';
+  const handleApprove = (item: any) => {
+    toast({
+      title: "Dispatch Approved",
+      description: `${item.name} has been approved for birthday cake dispatch.`,
+    });
   };
 
-  const getStatusBadge = (status, type) => {
-    const statusColors = {
-      dispatch: {
-        'Approved': 'bg-green-100 text-green-800',
-        'Pending': 'bg-yellow-100 text-yellow-800',
-        'Dispatched': 'bg-blue-100 text-blue-800',
-        'Rejected': 'bg-red-100 text-red-800',
-        'Missed': 'bg-red-100 text-red-800'
-      },
-      cultivator: {
-        'Approved': 'bg-green-100 text-green-800',
-        'Do Not Send': 'bg-red-100 text-red-800',
-        'Pending Confirmation': 'bg-yellow-100 text-yellow-800'
-      },
-      eligibility: {
-        'Eligible': 'bg-green-100 text-green-800',
-        'Ineligible': 'bg-red-100 text-red-800'
-      }
-    };
-    return statusColors[type][status] || 'bg-gray-100 text-gray-800';
+  const handleReject = (item: any) => {
+    toast({
+      title: "Dispatch Rejected", 
+      description: `${item.name} has been rejected for birthday cake dispatch.`,
+      variant: "destructive"
+    });
   };
-
-  const filteredData = mockPlanningData.filter(item => {
-    const cityMatch = filters.city === 'all' || item.city === filters.city;
-    const eligibilityMatch = filters.eligibility === 'all' || item.eligibilityStatus === filters.eligibility;
-    const dispatchMatch = filters.dispatchStatus === 'all' || item.dispatchStatus === filters.dispatchStatus;
-    const cultivatorMatch = filters.cultivatorStatus === 'all' || item.cultivatorStatus === filters.cultivatorStatus;
-    const searchMatch = filters.searchTerm === '' || 
-      item.name.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
-      item.icsId.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
-      item.phone.includes(filters.searchTerm);
-    
-    return cityMatch && eligibilityMatch && dispatchMatch && cultivatorMatch && searchMatch;
-  });
 
   const handleBulkApprove = () => {
-    console.log('Bulk approving:', selectedRows);
+    toast({
+      title: "Bulk Approval Completed",
+      description: "Selected items have been approved for dispatch.",
+    });
   };
 
-  const handleRowSelect = (id) => {
-    setSelectedRows(prev => 
-      prev.includes(id) 
-        ? prev.filter(rowId => rowId !== id)
-        : [...prev, id]
-    );
-  };
+  const filteredData = mockData.filter(item => {
+    const searchTermMatch = searchTerm
+      ? item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.icsId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.dmsId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.phone.includes(searchTerm)
+      : true;
+
+    const cityMatch = cityFilter ? item.address.toLowerCase().includes(cityFilter.toLowerCase()) : true;
+    const statusMatch = statusFilter ? item.dispatchStatus === statusFilter : true;
+
+    return searchTermMatch && cityMatch && statusMatch;
+  });
 
   return (
     <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Birthday Dispatch Planning Report</h1>
+          <p className="text-gray-600">Manage upcoming birthday dispatches and eligibility</p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className="bg-[#b33324] hover:bg-[#b33324]/90">
+                <Check className="w-4 h-4 mr-2" />
+                Bulk Approve
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Confirm Bulk Approval</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to approve all selected items for birthday cake dispatch? This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleBulkApprove} className="bg-[#b33324] hover:bg-[#b33324]/90">
+                  Approve All
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button variant="outline">
+            <Download className="w-4 h-4 mr-2" />
+            Export Report
+          </Button>
+        </div>
+      </div>
+
       {/* Filters Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Filter className="w-5 h-5 mr-2" />
-            Birthday Dispatch Planning Report
-          </CardTitle>
+          <CardTitle>Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Input
-              type="date"
-              placeholder="Date Range (DOB)"
-              value={filters.dateRange}
-              onChange={(e) => setFilters({...filters, dateRange: e.target.value})}
+              type="text"
+              placeholder="Search by Name, ICS ID, DMS ID, Phone..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            
-            <Select value={filters.city} onValueChange={(value) => setFilters({...filters, city: value})}>
+            <Select value={cityFilter} onValueChange={setCityFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="City/State" />
+                <SelectValue placeholder="Filter by City" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Cities</SelectItem>
+                <SelectItem value="">All Cities</SelectItem>
                 <SelectItem value="Mumbai">Mumbai</SelectItem>
                 <SelectItem value="Delhi">Delhi</SelectItem>
                 <SelectItem value="Bangalore">Bangalore</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={filters.eligibility} onValueChange={(value) => setFilters({...filters, eligibility: value})}>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Eligibility Status" />
+                <SelectValue placeholder="Filter by Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="">All Statuses</SelectItem>
                 <SelectItem value="Eligible">Eligible</SelectItem>
-                <SelectItem value="Ineligible">Ineligible</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={filters.dispatchStatus} onValueChange={(value) => setFilters({...filters, dispatchStatus: value})}>
-              <SelectTrigger>
-                <SelectValue placeholder="Dispatch Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Approved">Approved</SelectItem>
-                <SelectItem value="Dispatched">Dispatched</SelectItem>
                 <SelectItem value="Rejected">Rejected</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={filters.cultivatorStatus} onValueChange={(value) => setFilters({...filters, cultivatorStatus: value})}>
-              <SelectTrigger>
-                <SelectValue placeholder="Cultivator Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="Approved">Approved</SelectItem>
-                <SelectItem value="Do Not Send">Do Not Send</SelectItem>
-                <SelectItem value="Pending Confirmation">Pending Confirmation</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Search ICS/DMS/Name/Phone"
-                value={filters.searchTerm}
-                onChange={(e) => setFilters({...filters, searchTerm: e.target.value})}
-                className="pl-9"
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              {selectedRows.length > 0 && (
-                <Button onClick={handleBulkApprove} className="bg-[#b33324] hover:bg-[#b33324]/90">
-                  <Check className="w-4 h-4 mr-2" />
-                  Bulk Approve ({selectedRows.length})
-                </Button>
-              )}
-            </div>
-            <Button variant="outline">
-              <Download className="w-4 h-4 mr-2" />
-              Export Report
-            </Button>
+            <Input
+              type="date"
+              placeholder="Select Date Range"
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+            />
           </div>
         </CardContent>
       </Card>
 
       {/* Data Table */}
       <Card>
-        <CardContent className="p-0">
+        <CardHeader>
+          <CardTitle>Birthday Planning List</CardTitle>
+        </CardHeader>
+        <CardContent>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-12">
-                    <Checkbox />
+                  <TableHead>
+                    <input type="checkbox" />
                   </TableHead>
-                  <TableHead>ICS/DMS Details</TableHead>
-                  <TableHead>Donor Information</TableHead>
-                  <TableHead>Address Details</TableHead>
-                  <TableHead>Lead Time & Status</TableHead>
-                  <TableHead>Dispatch History</TableHead>
-                  <TableHead>Donation & Engagement</TableHead>
+                  <TableHead>ICS/DMS ID</TableHead>
+                  <TableHead>Donor Details</TableHead>
+                  <TableHead>Birthday</TableHead>
+                  <TableHead>Address</TableHead>
+                  <TableHead>Lead Time</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item, index) => (
-                  <TableRow key={index} className={getRowHighlight(item.highlight)}>
+                {filteredData.slice(0, 10).map((item, index) => (
+                  <TableRow key={index}>
                     <TableCell>
-                      <Checkbox 
-                        checked={selectedRows.includes(item.id)}
-                        onCheckedChange={() => handleRowSelect(item.id)}
-                      />
+                      <input type="checkbox" />
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
                         <div className="font-medium text-sm">ICS: {item.icsId}</div>
                         <div className="text-sm text-gray-600">DMS: {item.dmsId}</div>
-                        <div className="text-xs text-gray-500">
-                          DOB: {new Date(item.dob).toLocaleDateString()}
-                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
                         <div className="font-medium">{item.name}</div>
-                        <div className="text-sm text-gray-600">{item.phone}</div>
-                        <div className="text-xs text-gray-500">
-                          Pref: {item.communicationPref}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1 max-w-48">
-                        <div className="text-sm font-medium">{item.city}, {item.state}</div>
-                        <div className="text-xs text-gray-600">PIN: {item.pincode}</div>
-                        <div className="text-xs text-gray-500 truncate" title={item.address}>
-                          {item.address}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-2">
-                        <Badge variant="outline" className="text-xs">
-                          {item.leadTime} days ({item.leadTimeCategory})
-                        </Badge>
-                        <div className="space-y-1">
-                          <Badge className={getStatusBadge(item.dispatchStatus, 'dispatch') + " text-xs"}>
-                            {item.dispatchStatus}
-                          </Badge>
-                          <Badge className={getStatusBadge(item.cultivatorStatus, 'cultivator') + " text-xs"}>
-                            {item.cultivatorStatus}
-                          </Badge>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1 text-sm">
-                        <div>This FY: {item.cakeDispatchCount}</div>
-                        <div>Historical: {item.historicalCount}</div>
-                        <div className="text-xs text-gray-500">
-                          First: {new Date(item.firstDonation).toLocaleDateString()}
+                        <div className="text-sm text-gray-600 flex items-center">
+                          <Phone className="w-3 h-3 mr-1" />
+                          {item.phone}
                         </div>
                         <div className="text-xs text-gray-500">
-                          Last: {new Date(item.lastDonation).toLocaleDateString()}
+                          Donation: ₹{item.familyDonation.toLocaleString()}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
-                        <div className="text-sm font-medium">₹{item.familyDonation.toLocaleString()}</div>
-                        <div className="text-xs">Zoom: {item.zoomPooja}</div>
-                        <div className="text-xs">Video: {item.wishesVideo}</div>
-                        <Badge className={getStatusBadge(item.eligibilityStatus, 'eligibility') + " text-xs"}>
-                          {item.eligibilityStatus}
-                        </Badge>
+                        <div className="text-sm font-medium">{new Date(item.dob).toLocaleDateString()}</div>
+                        <div className="text-xs text-gray-500">
+                          {Math.ceil((new Date(item.dob).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col space-y-1">
-                        <Link to={`/birthday/dispatch/${item.id}`}>
-                          <Button variant="ghost" size="sm" title="View Profile">
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                        </Link>
-                        <Button variant="ghost" size="sm" className="text-green-600" title="Approve">
-                          <Check className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-red-600" title="Mark Ineligible">
-                          <X className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-blue-600" title="Add Comment">
-                          <User className="w-4 h-4" />
+                      <div className="text-sm max-w-48 truncate" title={item.address}>
+                        <MapPin className="w-3 h-3 inline mr-1" />
+                        {item.address}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{item.leadTimeCategory}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <Badge className={
+                          item.dispatchStatus === 'Eligible' ? 'bg-green-100 text-green-800' :
+                          item.dispatchStatus === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-800'
+                        }>
+                          {item.dispatchStatus}
+                        </Badge>
+                        <div className="text-xs text-gray-500">{item.cultivatorStatus}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-1">
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-800">
+                              <Check className="w-4 h-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Approve Dispatch</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to approve {item.name} for birthday cake dispatch?
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleApprove(item)} className="bg-green-600 hover:bg-green-700">
+                                Approve
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                        
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-800">
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Reject Dispatch</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to reject {item.name} for birthday cake dispatch? Please provide a reason.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => handleReject(item)} className="bg-red-600 hover:bg-red-700">
+                                Reject
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                        
+                        <Button variant="ghost" size="sm">
+                          <Eye className="w-4 h-4" />
                         </Button>
                       </div>
                     </TableCell>
@@ -374,63 +461,6 @@ const BirthdayPlanningList = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-green-600">
-                  {filteredData.filter(item => item.dispatchStatus === 'Approved').length}
-                </div>
-                <div className="text-sm text-gray-600">Approved for Dispatch</div>
-              </div>
-              <Check className="w-8 h-8 text-green-600" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-yellow-600">
-                  {filteredData.filter(item => item.dispatchStatus === 'Pending').length}
-                </div>
-                <div className="text-sm text-gray-600">Pending Approval</div>
-              </div>
-              <Calendar className="w-8 h-8 text-yellow-600" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-red-600">
-                  {filteredData.filter(item => item.dispatchStatus === 'Missed').length}
-                </div>
-                <div className="text-sm text-gray-600">Missed Dispatches</div>
-              </div>
-              <AlertCircle className="w-8 h-8 text-red-600" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-[#b33324]">{filteredData.length}</div>
-                <div className="text-sm text-gray-600">Total Records</div>
-              </div>
-              <User className="w-8 h-8 text-[#b33324]" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 };

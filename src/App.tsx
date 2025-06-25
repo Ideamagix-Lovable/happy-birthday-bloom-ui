@@ -13,6 +13,10 @@ import LotDetail from "./pages/LotDetail";
 import ShipmentTrackingDetail from "./pages/ShipmentTrackingDetail";
 import KitchenReportDetail from "./pages/KitchenReportDetail";
 import CultivatorReport from "./pages/CultivatorReport";
+import BulkDispatch from "./components/birthday/BulkDispatch";
+import EmergencyDispatch from "./components/birthday/EmergencyDispatch";
+import ScheduleDispatch from "./components/birthday/ScheduleDispatch";
+import DispatchSettings from "./components/birthday/DispatchSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +37,10 @@ const App = () => (
           <Route path="/birthday/shipment/:awbNumber" element={<ShipmentTrackingDetail />} />
           <Route path="/birthday/kitchen-report" element={<KitchenReportDetail />} />
           <Route path="/birthday/cultivator-report" element={<CultivatorReport />} />
+          <Route path="/birthday/bulk-dispatch" element={<BulkDispatch />} />
+          <Route path="/birthday/emergency-dispatch" element={<EmergencyDispatch />} />
+          <Route path="/birthday/schedule-dispatch" element={<ScheduleDispatch />} />
+          <Route path="/birthday/settings" element={<DispatchSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
