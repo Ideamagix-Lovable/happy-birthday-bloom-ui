@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
-import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, Gift, ChefHat } from 'lucide-react';
+import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, Gift, ChefHat, Download } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {
   AlertDialog,
@@ -34,12 +36,34 @@ const DispatchDashboard = () => {
     { id: 3, description: 'Cultivator Priya Devi approved dispatch', time: '30 mins ago' },
   ]);
 
+  // Birthday dispatch specific data
+  const [dailyDispatchData] = useState([
+    { area: 'Mumbai', region: 'IMUM', assigned: 5, unassigned: 37 },
+    { area: 'Rest of Maharashtra', region: 'ROM', assigned: 0, unassigned: 7 },
+    { area: 'Rest Of India', region: 'ROI', assigned: 0, unassigned: 39 }
+  ]);
+
+  const [cultivatorData] = useState([
+    { name: 'Priya Devi', assigned: 45, pending: 12, approved: 33 },
+    { name: 'Sunil Das', assigned: 38, pending: 8, approved: 30 },
+    { name: 'Ravi Kumar', assigned: 29, pending: 5, approved: 24 },
+    { name: 'Anita Sharma', assigned: 23, pending: 7, approved: 16 }
+  ]);
+
+  const [weeklyDispatchData] = useState([
+    { date: '19-06-2024', dispatches: 57, videos: 57, assigned: 3, unassigned: 54, total: 57 },
+    { date: '20-06-2024', dispatches: 88, videos: 88, assigned: 3, unassigned: 85, total: 88 },
+    { date: '21-06-2024', dispatches: 81, videos: 81, assigned: 3, unassigned: 78, total: 81 },
+    { date: '22-06-2024', dispatches: 77, videos: 77, assigned: 6, unassigned: 71, total: 77 },
+    { date: '23-06-2024', dispatches: 72, videos: 72, assigned: 3, unassigned: 69, total: 72 },
+    { date: '24-06-2024', dispatches: 78, videos: 78, assigned: 8, unassigned: 70, total: 78 }
+  ]);
+
   const handleGenerateKitchenReport = () => {
     toast({
       title: "Kitchen Report Generated",
       description: "The kitchen requirements report has been successfully generated.",
     });
-    // Navigate to kitchen report detail page
     window.location.href = '/birthday/kitchen-report';
   };
 
@@ -48,7 +72,6 @@ const DispatchDashboard = () => {
       title: "Cultivator Report Generated", 
       description: "The cultivator assignment and approval report has been successfully generated.",
     });
-    // Navigate to cultivator report page
     window.location.href = '/birthday/cultivator-report';
   };
 
@@ -65,6 +88,21 @@ const DispatchDashboard = () => {
       description: "Emergency dispatch has been prioritized and assigned to fastest courier.",
     });
   };
+
+  const handleExportDaily = () => {
+    toast({
+      title: "Export Initiated",
+      description: "Daily dispatch report is being exported.",
+    });
+  };
+
+  const grandTotal = weeklyDispatchData.reduce((acc, row) => ({
+    dispatches: acc.dispatches + row.dispatches,
+    videos: acc.videos + row.videos,
+    assigned: acc.assigned + row.assigned,
+    unassigned: acc.unassigned + row.unassigned,
+    total: acc.total + row.total
+  }), { dispatches: 0, videos: 0, assigned: 0, unassigned: 0, total: 0 });
 
   return (
     <div className="space-y-6">
@@ -119,6 +157,109 @@ const DispatchDashboard = () => {
         </Card>
       </div>
 
+      {/* Birthday Dispatch Status Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">Total Eligible</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-600">245</div>
+            <p className="text-sm text-gray-500 mt-1">Donors eligible for dispatch</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">Pending Dispatch</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-yellow-600">89</div>
+            <p className="text-sm text-gray-500 mt-1">Awaiting approval</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">Dispatched</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">156</div>
+            <p className="text-sm text-gray-500 mt-1">Successfully sent</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">Missed</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-red-600">12</div>
+            <p className="text-sm text-gray-500 mt-1">Missed deadlines</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">Resends</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600">8</div>
+            <p className="text-sm text-gray-500 mt-1">RTO/Redelivery</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Lead Time Distribution Cards */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Lead Time Distribution</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">IMUM</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">4 days</div>
+              <div className="text-lg font-semibold text-gray-800">45</div>
+              <p className="text-sm text-gray-500 mt-1">18% of total</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">ROM</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">5 days</div>
+              <div className="text-lg font-semibold text-gray-800">67</div>
+              <p className="text-sm text-gray-500 mt-1">27% of total</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">ROI</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">7 days</div>
+              <div className="text-lg font-semibold text-gray-800">123</div>
+              <p className="text-sm text-gray-500 mt-1">50% of total</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">NE</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">10 days</div>
+              <div className="text-lg font-semibold text-gray-800">10</div>
+              <p className="text-sm text-gray-500 mt-1">4% of total</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
       {/* Charts and Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
@@ -163,6 +304,126 @@ const DispatchDashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Daily Dispatch Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Daily Dispatch - 24-06-2024</CardTitle>
+              <CardDescription>
+                88 - Total Birthdays | 88 - Dispatches Done
+              </CardDescription>
+            </div>
+            <Button onClick={handleExportDaily} variant="outline" size="sm">
+              <Download className="w-4 h-4 mr-2" />
+              Export
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Area</TableHead>
+                <TableHead>Region</TableHead>
+                <TableHead>Assigned</TableHead>
+                <TableHead>Unassigned</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {dailyDispatchData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{row.area}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{row.region}</Badge>
+                  </TableCell>
+                  <TableCell>{row.assigned}</TableCell>
+                  <TableCell>{row.unassigned}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Cultivator Performance Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Cultivator Performance</CardTitle>
+          <CardDescription>Performance metrics for all cultivators</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Cultivator</TableHead>
+                <TableHead>Assigned</TableHead>
+                <TableHead>Pending</TableHead>
+                <TableHead>Approved</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {cultivatorData.map((cultivator, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{cultivator.name}</TableCell>
+                  <TableCell>{cultivator.assigned}</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">{cultivator.pending}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="default" className="bg-green-100 text-green-800">
+                      {cultivator.approved}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Weekly Dispatch Dashboard */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Weekly Dispatch Dashboard</CardTitle>
+          <CardDescription>Comprehensive weekly dispatch statistics</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Dispatches Done</TableHead>
+                <TableHead>Videos Sent</TableHead>
+                <TableHead>Assigned</TableHead>
+                <TableHead>Unassigned</TableHead>
+                <TableHead>Total</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {weeklyDispatchData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{row.date}</TableCell>
+                  <TableCell>{row.dispatches}</TableCell>
+                  <TableCell>{row.videos}</TableCell>
+                  <TableCell>{row.assigned}</TableCell>
+                  <TableCell>{row.unassigned}</TableCell>
+                  <TableCell className="font-semibold">{row.total}</TableCell>
+                </TableRow>
+              ))}
+              <TableRow className="bg-gray-50 font-semibold">
+                <TableCell>Grand Total</TableCell>
+                <TableCell>{grandTotal.dispatches}</TableCell>
+                <TableCell>{grandTotal.videos}</TableCell>
+                <TableCell>{grandTotal.assigned}</TableCell>
+                <TableCell>{grandTotal.unassigned}</TableCell>
+                <TableCell>{grandTotal.total}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
