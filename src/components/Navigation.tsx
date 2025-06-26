@@ -47,7 +47,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Donors
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/donors" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Donor Listing
@@ -60,7 +60,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Donations
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/donations" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Donation Listing
@@ -83,7 +83,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Birthday
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/birthday" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Dashboard
@@ -131,7 +131,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Dispatch
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[220px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[220px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/dispatch/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Dashboard
@@ -214,7 +214,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   DQ
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/dq/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       DQ Dashboard
@@ -262,7 +262,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Dialler
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[220px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[220px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/dialler/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Dialler Dashboard
@@ -334,7 +334,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   MIS
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/mis/reports" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       MIS Reports
@@ -357,7 +357,7 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px] h-auto data-[state=open]:text-[#b33324]">
                   Miscellaneous
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute left-0 top-full min-w-[200px] p-2 bg-white border shadow-lg rounded-md z-[100]">
+                <NavigationMenuContent className="min-w-[200px] p-2 bg-white border shadow-lg rounded-md">
                   <NavigationMenuLink asChild>
                     <Link to="/miscellaneous/merged-donors" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                       Merged Donors
