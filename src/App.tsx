@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,10 @@ import DonorDetail from "./pages/DonorDetail";
 import DonationListing from "./pages/DonationListing";
 import DonationDetail from "./pages/DonationDetail";
 import NotFound from "./pages/NotFound";
+import ReadyToDispatchList from "./pages/ReadyToDispatchList";
+import DispatchDetail from "./pages/DispatchDetail";
+import AllDQList from "./pages/AllDQList";
+import DQDetail from "./pages/DQDetail";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,10 @@ const App = () => (
           <Route path="/donors/:id" element={<DonorDetail />} />
           <Route path="/donations" element={<DonationListing />} />
           <Route path="/donations/:id" element={<DonationDetail />} />
+          <Route path="/dispatch/ready-to-dispatch" element={<ReadyToDispatchList />} />
+          <Route path="/dispatch/details/:id" element={<DispatchDetail />} />
+          <Route path="/dq/all" element={<AllDQList />} />
+          <Route path="/dq/details/:id" element={<DQDetail />} />
           <Route path="/birthday" element={<BirthdayModule />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />
