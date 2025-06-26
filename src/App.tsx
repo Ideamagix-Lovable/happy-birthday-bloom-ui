@@ -155,8 +155,9 @@ const App = () => (
           <Route path="/tasks/:id" element={<TaskDetail />} />
           <Route path="/analytics" element={<Analytics />} />
           
-          {/* Birthday Pages */}
+          {/* Birthday Pages - New Routes */}
           <Route path="/birthday" element={<BirthdayModule />} />
+          <Route path="/birthday/dashboard" element={<BirthdayDashboard />} />
           <Route path="/birthday-page" element={<BirthdayPage />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />

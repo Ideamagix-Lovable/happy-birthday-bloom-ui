@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -83,28 +82,28 @@ const Navigation = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-white border shadow-lg">
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday" className="text-[11px]">Dashboard</Link>
+                  <Link to="/birthday/dashboard" className="text-[11px]">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/list" className="text-[11px]">Birthday List</Link>
+                  <Link to="/birthday" className="text-[11px]">Birthday List</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/planning-report" className="text-[11px]">Planning Report</Link>
+                  <Link to="/birthday" className="text-[11px]">Planning Report</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/custom-dispatch" className="text-[11px]">Custom Dispatch</Link>
+                  <Link to="/birthday" className="text-[11px]">Custom Dispatch</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/dispatch-queue" className="text-[11px]">Dispatch Queue</Link>
+                  <Link to="/birthday" className="text-[11px]">Dispatch Queue</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/shipment-tracker" className="text-[11px]">Shipment Tracker</Link>
+                  <Link to="/birthday" className="text-[11px]">Shipment Tracker</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/reports" className="text-[11px]">Reports</Link>
+                  <Link to="/birthday" className="text-[11px]">Reports</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/birthday/master-file" className="text-[11px]">Master File</Link>
+                  <Link to="/birthday" className="text-[11px]">Master File</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
