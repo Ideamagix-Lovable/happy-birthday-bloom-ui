@@ -28,6 +28,7 @@ import DQDetail from "./pages/DQDetail";
 import DiallerListAll from "./pages/DiallerListAll";
 import DiallerDetail from "./pages/DiallerDetail";
 import Tasks from "./pages/Tasks";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/dialler/list-all" element={<DiallerListAll />} />
           <Route path="/dialler/details/:id" element={<DiallerDetail />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/birthday" element={<BirthdayModule />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />
