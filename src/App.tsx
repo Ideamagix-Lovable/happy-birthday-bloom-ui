@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -53,6 +54,7 @@ import DiallerCallLogs from "./pages/DiallerCallLogs";
 // Existing Pages
 import BirthdayModule from "./pages/BirthdayModule";
 import BirthdayPage from "./pages/BirthdayPage";
+import BirthdayDashboard from "./pages/BirthdayDashboard";
 import BirthdayDispatchDetail from "./pages/BirthdayDispatchDetail";
 import BirthdayDispatchEdit from "./pages/BirthdayDispatchEdit";
 import DispatchQueueEdit from "./pages/DispatchQueueEdit";
