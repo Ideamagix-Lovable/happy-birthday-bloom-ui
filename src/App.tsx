@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BirthdayModule from "./pages/BirthdayModule";
-import BirthdayPage from "./pages/BirthdayPage";
 import BirthdayDispatchDetail from "./pages/BirthdayDispatchDetail";
 import BirthdayDispatchEdit from "./pages/BirthdayDispatchEdit";
 import DispatchQueueEdit from "./pages/DispatchQueueEdit";
@@ -55,7 +53,6 @@ const App = () => (
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/birthday" element={<BirthdayModule />} />
-          <Route path="/birthday-page" element={<BirthdayPage />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />
           <Route path="/birthday/queue/edit/:id" element={<DispatchQueueEdit />} />
