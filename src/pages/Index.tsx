@@ -1,33 +1,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gift, Calendar, Package, FileText, User } from "lucide-react";
+import { Gift, Calendar, Package, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
+import Navigation from "@/components/Navigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50" style={{ fontFamily: 'Geologica, sans-serif' }}>
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-[#b33324] rounded-full flex items-center justify-center">
-                  <Gift className="w-4 h-4 text-white" />
-                </div>
-                <h1 className="text-xl font-semibold text-gray-900">ISKCON Bhiwandi - MIS</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Hare Krishna</span>
-              <div className="w-8 h-8 bg-[#b33324] rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navigation />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -38,21 +19,25 @@ const Index = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="text-center">
-              <Calendar className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
-              <CardTitle className="text-lg">Donations</CardTitle>
-              <CardDescription>Manage donor records and donations</CardDescription>
-            </CardHeader>
-          </Card>
+          <Link to="/donors">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="text-center">
+                <Calendar className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
+                <CardTitle className="text-lg">Donors</CardTitle>
+                <CardDescription>Manage donor records and profiles</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardHeader className="text-center">
-              <Package className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
-              <CardTitle className="text-lg">Dispatch</CardTitle>
-              <CardDescription>Handle shipments and deliveries</CardDescription>
-            </CardHeader>
-          </Card>
+          <Link to="/donations">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="text-center">
+                <Package className="w-8 h-8 mx-auto text-[#b33324] mb-2" />
+                <CardTitle className="text-lg">Donations</CardTitle>
+                <CardDescription>Handle donations and transactions</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
 
           <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardHeader className="text-center">

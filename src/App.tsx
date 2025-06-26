@@ -17,6 +17,10 @@ import BulkDispatch from "./components/birthday/BulkDispatch";
 import EmergencyDispatch from "./components/birthday/EmergencyDispatch";
 import ScheduleDispatch from "./components/birthday/ScheduleDispatch";
 import DispatchSettings from "./components/birthday/DispatchSettings";
+import DonorListing from "./pages/DonorListing";
+import DonorDetail from "./pages/DonorDetail";
+import DonationListing from "./pages/DonationListing";
+import DonationDetail from "./pages/DonationDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +33,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/donors" element={<DonorListing />} />
+          <Route path="/donors/:id" element={<DonorDetail />} />
+          <Route path="/donations" element={<DonationListing />} />
+          <Route path="/donations/:id" element={<DonationDetail />} />
           <Route path="/birthday" element={<BirthdayModule />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />
