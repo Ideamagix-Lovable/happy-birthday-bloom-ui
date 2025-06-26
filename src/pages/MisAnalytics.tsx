@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,7 +19,7 @@ const MisAnalytics = () => {
   const deptPerformance = [
     { dept: 'Dispatch', revenue: 850000, cost: 145000, efficiency: 96, satisfaction: 94, target: 900000 },
     { dept: 'DQ', revenue: 420000, cost: 85000, efficiency: 93, satisfaction: 92, target: 450000 },
-    { dept: 'Dialler', revenue: 680000, cost: 125000, cost: 92, satisfaction: 89, target: 700000 },
+    { dept: 'Dialler', revenue: 680000, cost: 125000, efficiency: 92, satisfaction: 89, target: 700000 },
     { dept: 'Kitchen', revenue: 320000, cost: 95000, efficiency: 88, satisfaction: 96, target: 350000 },
     { dept: 'Accounts', revenue: 180000, cost: 65000, efficiency: 94, satisfaction: 91, target: 200000 },
     { dept: 'MIS', revenue: 95000, cost: 45000, efficiency: 97, satisfaction: 93, target: 100000 }
@@ -55,7 +54,7 @@ const MisAnalytics = () => {
   const campaignEffectiveness = [
     { campaign: 'Ayodhya', launched: 45, successful: 38, roi: 4.2, cost: 125000, revenue: 525000 },
     { campaign: 'Goloka', launched: 32, successful: 28, roi: 3.8, cost: 95000, revenue: 361000 },
-    { campaign: 'Mathura', launched: 25, successful: 21, roi: 3.5, cost: 75000, cost: 262500 },
+    { campaign: 'Mathura', launched: 25, successful: 21, roi: 3.5, cost: 75000, revenue: 262500 },
     { campaign: 'Vaikuntha', launched: 18, successful: 16, roi: 4.1, cost: 58000, revenue: 237800 },
     { campaign: 'Birthday', launched: 65, successful: 58, roi: 2.8, cost: 185000, revenue: 518000 }
   ];
