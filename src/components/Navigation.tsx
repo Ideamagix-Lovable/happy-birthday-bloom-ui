@@ -26,19 +26,11 @@ const Navigation = () => {
 
           {/* Navigation Menu */}
           <NavigationMenu className="flex-1 max-w-none">
-            <NavigationMenuList className="flex space-x-1" style={{ fontSize: '11px' }}>
+            <NavigationMenuList className="flex space-x-1">
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link to="/" className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                     Dashboard
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <Link to="/mis" className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
-                    MIS
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -55,8 +47,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Donors
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-48 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-48 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/donors" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Donor Listing
@@ -70,8 +62,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Donations
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-48 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-48 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/donations" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Donation Listing
@@ -95,8 +87,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Birthday
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-48 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-48 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/birthday" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Dashboard
@@ -145,8 +137,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Dispatch
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-56 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-56 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/dispatch/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Dashboard
@@ -230,8 +222,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   DQ
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-52 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-52 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/dq/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         DQ Dashboard
@@ -280,8 +272,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Dialler
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-56 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-56 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/dialler/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Dialler Dashboard
@@ -346,8 +338,8 @@ const Navigation = () => {
                 <NavigationMenuTrigger className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
                   Miscellaneous
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-2 w-48 bg-white shadow-lg border">
+                <NavigationMenuContent className="relative">
+                  <div className="p-2 w-48 bg-white shadow-lg border z-50">
                     <NavigationMenuLink asChild>
                       <Link to="/miscellaneous/merged-donors" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded text-[11px]">
                         Merged Donors

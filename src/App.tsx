@@ -25,6 +25,9 @@ import ReadyToDispatchList from "./pages/ReadyToDispatchList";
 import DispatchDetail from "./pages/DispatchDetail";
 import AllDQList from "./pages/AllDQList";
 import DQDetail from "./pages/DQDetail";
+import DiallerListAll from "./pages/DiallerListAll";
+import DiallerDetail from "./pages/DiallerDetail";
+import Tasks from "./pages/Tasks";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +47,9 @@ const App = () => (
           <Route path="/dispatch/details/:id" element={<DispatchDetail />} />
           <Route path="/dq/all" element={<AllDQList />} />
           <Route path="/dq/details/:id" element={<DQDetail />} />
+          <Route path="/dialler/list-all" element={<DiallerListAll />} />
+          <Route path="/dialler/details/:id" element={<DiallerDetail />} />
+          <Route path="/tasks" element={<Tasks />} />
           <Route path="/birthday" element={<BirthdayModule />} />
           <Route path="/birthday/dispatch/:id" element={<BirthdayDispatchDetail />} />
           <Route path="/birthday/dispatch/edit/:id" element={<BirthdayDispatchEdit />} />
