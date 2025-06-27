@@ -21,7 +21,7 @@ const BirthdayModule = () => {
             {/* Left - Logo and Title */}
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-3">
-                <img alt="ISKCON" className="h-8 w-8" src="/lovable-uploads/a5a1275e-9c82-468b-938c-3fa2c7580675.png" />
+                <img alt="ISKCON" src="/lovable-uploads/a5a1275e-9c82-468b-938c-3fa2c7580675.png" className="h-80 w-80 " />
                 <div>
                   
                   
