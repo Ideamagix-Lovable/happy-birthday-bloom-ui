@@ -4,221 +4,156 @@ import Navigation from '@/components/Navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Calendar, Filter } from 'lucide-react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Calendar, Filter, RefreshCw } from 'lucide-react';
+
+// Import new dashboard components
+import DashboardStatCards from '@/components/dashboard/DashboardStatCards';
+import DonationAnalytics from '@/components/dashboard/DonationAnalytics';
+import DispatchOperations from '@/components/dashboard/DispatchOperations';
+import TopDonorsTable from '@/components/dashboard/TopDonorsTable';
 
 const MisDashboardNew = () => {
   const [activeFilter, setActiveFilter] = useState('daily');
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation />
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">MIS Dashboard</h1>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Filter By Date
-            </Button>
+          {/* Header Section */}
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">MIS Dashboard</h1>
+              <p className="text-gray-600 mt-1">Real-time insights and analytics</p>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" className="flex items-center gap-2">
+                <RefreshCw className="w-4 h-4" />
+                Refresh
+              </Button>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Filter className="w-4 h-4" />
+                Filter By Date
+              </Button>
+            </div>
           </div>
 
           {/* Filter Tabs */}
-          <div className="mb-6">
+          <div className="mb-8">
             <Tabs value={activeFilter} onValueChange={setActiveFilter} className="w-full">
-              <TabsList className="grid w-fit grid-cols-2">
-                <TabsTrigger value="daily" className="data-[state=active]:bg-red-600 data-[state=active]:text-white">
-                  Daily
+              <TabsList className="grid w-fit grid-cols-2 bg-white shadow-sm">
+                <TabsTrigger 
+                  value="daily" 
+                  className="data-[state=active]:bg-red-600 data-[state=active]:text-white px-6"
+                >
+                  Daily View
                 </TabsTrigger>
-                <TabsTrigger value="weekly">Weekly</TabsTrigger>
+                <TabsTrigger value="weekly" className="px-6">Weekly View</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
 
-          {/* Donation Summary */}
-          <Card className="mb-8">
-            <CardHeader className="border-l-4 border-red-600">
-              <CardTitle className="text-lg font-semibold text-gray-800">
-                Bhiwandi- Donation Summary for Financial Year 2025-26 As of 27th June 2025
+          {/* Dashboard Stats Cards */}
+          <DashboardStatCards />
+
+          {/* Donation Summary Card */}
+          <Card className="mb-8 shadow-md">
+            <CardHeader className="border-l-4 border-red-600 bg-gradient-to-r from-red-50 to-white">
+              <CardTitle className="text-xl font-bold text-gray-800">
+                Bhiwandi - Donation Summary for Financial Year 2025-26
               </CardTitle>
+              <p className="text-sm text-gray-600">As of 27th June 2025</p>
             </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      <th className="text-left p-3 font-medium">27th June 2025</th>
-                      <th className="text-center p-3 font-medium">As per Accounts</th>
-                      <th className="text-center p-3 font-medium">As per DMS</th>
-                      <th className="text-center p-3 font-medium">Count Of Donations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-3 font-medium">Total Donation Received</td>
-                      <td className="text-center p-3">₹0</td>
-                      <td className="text-center p-3">₹0</td>
-                      <td className="text-center p-3">0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Top 10 Donors */}
-          <Card className="mb-8">
-            <CardHeader className="border-l-4 border-red-600">
-              <CardTitle className="text-lg font-semibold text-gray-800">Top 10 Donors</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gray-100">
-                      <TableHead>Legal Name</TableHead>
-                      <TableHead>Cultivator</TableHead>
-                      <TableHead>New/Repeat</TableHead>
-                      <TableHead>Donation Received 27th June 2025</TableHead>
-                      <TableHead>Donations in FY2526</TableHead>
-                      <TableHead>Donations in FY2425</TableHead>
-                      <TableHead>Donations in FY2324</TableHead>
-                      <TableHead>Change Over FY2324</TableHead>
-                      <TableHead>Count of Donation</TableHead>
-                      <TableHead>City</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">Grand Total</TableCell>
-                      <TableCell>-</TableCell>
-                      <TableCell>Repeat</TableCell>
-                      <TableCell>₹0</TableCell>
-                      <TableCell>₹0</TableCell>
-                      <TableCell>₹0</TableCell>
-                      <TableCell>₹0</TableCell>
-                      <TableCell>₹0</TableCell>
-                      <TableCell>0</TableCell>
-                      <TableCell>-</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Donor Summary Table */}
-          <Card className="mb-8">
             <CardContent className="pt-6">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-left p-3 font-medium" colSpan={3}>New Donor</th>
-                      <th className="text-left p-3 font-medium" colSpan={3}>Repeat Donor</th>
-                      <th className="text-left p-3 font-medium" colSpan={3}>Total</th>
-                    </tr>
-                    <tr className="bg-gray-100">
-                      <th className="text-center p-3 font-medium">Donor Count</th>
-                      <th className="text-center p-3 font-medium">Donation Count</th>
-                      <th className="text-center p-3 font-medium">Donation Amount</th>
-                      <th className="text-center p-3 font-medium">Donor Count</th>
-                      <th className="text-center p-3 font-medium">Donation Count</th>
-                      <th className="text-center p-3 font-medium">Donation Amount</th>
-                      <th className="text-center p-3 font-medium">Donor Count</th>
-                      <th className="text-center p-3 font-medium">Donation Count</th>
-                      <th className="text-center p-3 font-medium">Donation Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="text-center p-3">0</td>
-                      <td className="text-center p-3">0</td>
-                      <td className="text-center p-3">₹0</td>
-                      <td className="text-center p-3">-</td>
-                      <td className="text-center p-3">-</td>
-                      <td className="text-center p-3">-</td>
-                      <td className="text-center p-3">-</td>
-                      <td className="text-center p-3">-</td>
-                      <td className="text-center p-3">-</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center p-6 bg-blue-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">₹0</div>
+                  <div className="text-sm text-gray-600 mt-1">As per Accounts</div>
+                </div>
+                <div className="text-center p-6 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">₹0</div>
+                  <div className="text-sm text-gray-600 mt-1">As per DMS</div>
+                </div>
+                <div className="text-center p-6 bg-purple-50 rounded-lg">
+                  <div className="text-2xl font-bold text-purple-600">0</div>
+                  <div className="text-sm text-gray-600 mt-1">Count of Donations</div>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Dispatch Report */}
-          <Card className="mb-8">
-            <CardHeader className="border-l-4 border-red-600">
-              <CardTitle className="text-lg font-semibold text-gray-800">
-                Dispatch Report As of 27th June 2025
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gray-100">
-                      <TableHead>Description</TableHead>
-                      <TableHead>Count (No of Donors with Phone numbers but No Addresses)</TableHead>
-                      <TableHead>Total Receipts to be Dispatched (Address Available)</TableHead>
-                      <TableHead>Dispatches done</TableHead>
-                      <TableHead>Pending</TableHead>
-                      <TableHead>Remark</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>-</TableCell>
-                      <TableCell className="text-center">1841</TableCell>
-                      <TableCell className="text-center">632</TableCell>
-                      <TableCell className="text-center">5644</TableCell>
-                      <TableCell className="text-center">1996</TableCell>
-                      <TableCell>-</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Donation Analytics Charts */}
+          <DonationAnalytics />
 
-          {/* Birthday Dispatches */}
-          <Card className="mb-8">
-            <CardHeader className="border-l-4 border-red-600">
-              <CardTitle className="text-lg font-semibold text-gray-800">
-                Birthday Dispatches As of 27th June 2025
-              </CardTitle>
+          {/* Top Donors Table */}
+          <TopDonorsTable />
+
+          {/* Dispatch Operations */}
+          <DispatchOperations />
+
+          {/* Donor Summary */}
+          <Card className="mb-8 shadow-md">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">Donor Summary Analysis</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gray-100">
-                      <TableHead>No of Birthdays</TableHead>
-                      <TableHead>Dispatches Done</TableHead>
-                      <TableHead>Area</TableHead>
-                      <TableHead>Assigned Count</TableHead>
-                      <TableHead>Unassigned Count</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>-</TableCell>
-                      <TableCell>-</TableCell>
-                      <TableCell>Mumbai</TableCell>
-                      <TableCell>-</TableCell>
-                      <TableCell>-</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell>Rest of Maharashtra</TableCell>
-                      <TableCell>-</TableCell>
-                      <TableCell>-</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* New Donor */}
+                <div className="p-6 border rounded-lg bg-blue-50">
+                  <h3 className="font-semibold text-blue-800 mb-4">New Donors</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donor Count</span>
+                      <span className="font-medium">0</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donation Count</span>
+                      <span className="font-medium">0</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Total Amount</span>
+                      <span className="font-medium">₹0</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Repeat Donor */}
+                <div className="p-6 border rounded-lg bg-green-50">
+                  <h3 className="font-semibold text-green-800 mb-4">Repeat Donors</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donor Count</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donation Count</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Total Amount</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Total */}
+                <div className="p-6 border rounded-lg bg-purple-50">
+                  <h3 className="font-semibold text-purple-800 mb-4">Total</h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donor Count</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Donation Count</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-gray-600">Total Amount</span>
+                      <span className="font-medium">-</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
