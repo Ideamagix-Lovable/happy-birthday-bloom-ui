@@ -114,9 +114,9 @@ const MisDashboardNew = () => {
                 <table className="w-full">
                   <thead>
                     <tr>
-                      <th className="text-left p-3 font-medium" colSpan="3">New Donor</th>
-                      <th className="text-left p-3 font-medium" colSpan="3">Repeat Donor</th>
-                      <th className="text-left p-3 font-medium" colSpan="3">Total</th>
+                      <th className="text-left p-3 font-medium" colSpan={3}>New Donor</th>
+                      <th className="text-left p-3 font-medium" colSpan={3}>Repeat Donor</th>
+                      <th className="text-left p-3 font-medium" colSpan={3}>Total</th>
                     </tr>
                     <tr className="bg-gray-100">
                       <th className="text-center p-3 font-medium">Donor Count</th>
