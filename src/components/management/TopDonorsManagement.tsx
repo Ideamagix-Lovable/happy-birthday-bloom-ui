@@ -7,33 +7,33 @@ import { Crown } from 'lucide-react';
 
 const TopDonorsManagement = () => {
   return (
-    <Card className="mb-8 shadow-md">
-      <CardHeader className="border-l-4 border-yellow-600">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Crown className="h-5 w-5 text-yellow-600" />
+    <Card className="shadow-sm">
+      <CardHeader className="border-l-4 border-yellow-600 pb-3">
+        <CardTitle className="text-base font-semibold flex items-center gap-2">
+          <Crown className="h-4 w-4 text-yellow-600" />
           Top 10 Donors
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-3">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="bg-gray-50">
-                <TableHead className="font-semibold">Legal Name</TableHead>
-                <TableHead className="font-semibold">Cultivator</TableHead>
-                <TableHead className="font-semibold">New/Repeat</TableHead>
-                <TableHead className="font-semibold">Donation Received 27th June 2025</TableHead>
-                <TableHead className="font-semibold">Donations in FY 25-26</TableHead>
-                <TableHead className="font-semibold">Donations in FY 24-25</TableHead>
-                <TableHead className="font-semibold">Donations in FY 23-24</TableHead>
-                <TableHead className="font-semibold">Change Over Previous</TableHead>
-                <TableHead className="font-semibold">Count of Donation</TableHead>
-                <TableHead className="font-semibold">City</TableHead>
+                <TableHead className="font-medium text-xs">Legal Name</TableHead>
+                <TableHead className="font-medium text-xs">Cultivator</TableHead>
+                <TableHead className="font-medium text-xs">New/Repeat</TableHead>
+                <TableHead className="font-medium text-xs">Donation Received 27th June 2025</TableHead>
+                <TableHead className="font-medium text-xs">Donations in FY 25-26</TableHead>
+                <TableHead className="font-medium text-xs">Donations in FY 24-25</TableHead>
+                <TableHead className="font-medium text-xs">Donations in FY 23-24</TableHead>
+                <TableHead className="font-medium text-xs">Change Over Previous</TableHead>
+                <TableHead className="font-medium text-xs">Count of Donation</TableHead>
+                <TableHead className="font-medium text-xs">City</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell colSpan={10} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={10} className="text-center py-6 text-gray-500 text-sm">
                   No data available
                 </TableCell>
               </TableRow>

@@ -24,76 +24,79 @@ const ManagementDashboard = () => {
   const [activeFilter, setActiveFilter] = useState('daily');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <div className="p-6">
+      <div className="p-4">
         <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div className="flex items-center justify-between mb-8">
+          {/* Compact Header Section */}
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Management Dashboard</h1>
-              <p className="text-gray-600 mt-1">Comprehensive analytics and insights</p>
+              <h1 className="text-2xl font-bold text-gray-900">Management Dashboard</h1>
+              <p className="text-sm text-gray-600">Comprehensive analytics and insights</p>
             </div>
-            <div className="flex gap-3">
-              <Button variant="outline" className="flex items-center gap-2">
-                <RefreshCw className="w-4 h-4" />
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" className="flex items-center gap-1">
+                <RefreshCw className="w-3 h-3" />
                 Refresh
               </Button>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Filter className="w-4 h-4" />
-                Filter By Date
+              <Button variant="outline" size="sm" className="flex items-center gap-1">
+                <Filter className="w-3 h-3" />
+                Filter
               </Button>
             </div>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="mb-8">
+          {/* Compact Filter Tabs */}
+          <div className="mb-4">
             <Tabs value={activeFilter} onValueChange={setActiveFilter} className="w-full">
-              <TabsList className="grid w-fit grid-cols-3 bg-white shadow-sm">
+              <TabsList className="grid w-fit grid-cols-3 bg-white shadow-sm h-8">
                 <TabsTrigger 
                   value="daily" 
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white px-6"
+                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white px-4 text-xs"
                 >
                   Daily
                 </TabsTrigger>
-                <TabsTrigger value="weekly" className="px-6">Weekly</TabsTrigger>
-                <TabsTrigger value="monthly" className="px-6">Monthly</TabsTrigger>
+                <TabsTrigger value="weekly" className="px-4 text-xs">Weekly</TabsTrigger>
+                <TabsTrigger value="monthly" className="px-4 text-xs">Monthly</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
 
-          {/* Total Donation Stats */}
-          <ManagementStats />
+          {/* Compact Grid Layout */}
+          <div className="space-y-4">
+            {/* Row 1: Total Donation */}
+            <ManagementStats />
 
-          {/* Donor Analysis */}
-          <DonorAnalysis />
+            {/* Row 2: Donor Analysis & Birthday/Anniversary Data */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <DonorAnalysis />
+              <BirthdayAnniversaryData />
+            </div>
 
-          {/* Birthday & Anniversary Data */}
-          <BirthdayAnniversaryData />
+            {/* Row 3: Daily Trends Chart */}
+            <DailyTrendsChart />
 
-          {/* Daily Trends Chart */}
-          <DailyTrendsChart />
+            {/* Row 4: Top Donors Table */}
+            <TopDonorsManagement />
 
-          {/* Top 10 Donors Table */}
-          <TopDonorsManagement />
+            {/* Row 5: Dispatch Summary */}
+            <DispatchSummarySection />
 
-          {/* Dispatch Summary */}
-          <DispatchSummarySection />
+            {/* Row 6: Calls Analytics */}
+            <CallsAnalytics />
 
-          {/* Calls Analytics */}
-          <CallsAnalytics />
+            {/* Row 7: Response Analytics & Source of Donation */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <ResponseAnalytics />
+              <SourceOfDonation />
+            </div>
 
-          {/* Response Analytics */}
-          <ResponseAnalytics />
+            {/* Row 8: Schemes and Ranges */}
+            <SchemesAndRanges />
 
-          {/* Schemes and Ranges */}
-          <SchemesAndRanges />
-
-          {/* Source of Donation */}
-          <SourceOfDonation />
-
-          {/* Top Locations */}
-          <TopLocations />
+            {/* Row 9: Top Locations */}
+            <TopLocations />
+          </div>
         </div>
       </div>
     </div>

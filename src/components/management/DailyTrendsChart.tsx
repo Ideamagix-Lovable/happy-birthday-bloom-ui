@@ -35,18 +35,19 @@ const DailyTrendsChart = () => {
   };
 
   return (
-    <Card className="mb-8 shadow-md">
-      <CardHeader className="border-l-4 border-indigo-600">
+    <Card className="shadow-sm">
+      <CardHeader className="border-l-4 border-indigo-600 pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
+          <CardTitle className="text-base font-semibold flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
             Daily Trends
           </CardTitle>
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <Button
               variant={activeFilter === 'amount' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveFilter('amount')}
+              className="text-xs px-3 py-1 h-7"
             >
               Amount
             </Button>
@@ -54,22 +55,23 @@ const DailyTrendsChart = () => {
               variant={activeFilter === 'count' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveFilter('count')}
+              className="text-xs px-3 py-1 h-7"
             >
               Count
             </Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="h-80">
+      <CardContent className="pt-3">
+        <ChartContainer config={chartConfig} className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={dummyData}>
-              <XAxis dataKey="time" />
-              <YAxis />
+              <XAxis dataKey="time" tick={{ fontSize: 11 }} />
+              <YAxis tick={{ fontSize: 11 }} />
               <Bar 
                 dataKey={activeFilter} 
                 fill={activeFilter === 'amount' ? '#3b82f6' : '#10b981'} 
-                radius={[4, 4, 0, 0]} 
+                radius={[2, 2, 0, 0]} 
               />
               <ChartTooltip content={<ChartTooltipContent />} />
             </BarChart>

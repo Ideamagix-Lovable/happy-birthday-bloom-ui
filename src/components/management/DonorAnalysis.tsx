@@ -5,47 +5,47 @@ import { Users, UserPlus, Repeat } from 'lucide-react';
 
 const DonorAnalysis = () => {
   return (
-    <Card className="mb-8 shadow-md">
-      <CardHeader className="border-l-4 border-green-600">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Users className="h-5 w-5" />
+    <Card className="shadow-sm">
+      <CardHeader className="border-l-4 border-green-600 pb-3">
+        <CardTitle className="text-base font-semibold flex items-center gap-2">
+          <Users className="h-4 w-4" />
           New v/s Repeated Donors
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <CardContent className="pt-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* New Donors */}
-          <div className="p-6 border rounded-lg bg-blue-50">
-            <h3 className="font-semibold text-blue-800 mb-4 flex items-center gap-2">
-              <UserPlus className="h-4 w-4" />
+          <div className="p-4 border rounded-lg bg-blue-50">
+            <h3 className="font-medium text-blue-800 mb-3 flex items-center gap-2">
+              <UserPlus className="h-3 w-3" />
               New Donors
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Count</span>
-                <span className="font-medium">0</span>
+                <span className="text-xs text-gray-600">Count</span>
+                <span className="font-medium text-sm">0</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Amount</span>
-                <span className="font-medium">₹0</span>
+                <span className="text-xs text-gray-600">Amount</span>
+                <span className="font-medium text-sm">₹0</span>
               </div>
             </div>
           </div>
 
           {/* Repeated Donors */}
-          <div className="p-6 border rounded-lg bg-green-50">
-            <h3 className="font-semibold text-green-800 mb-4 flex items-center gap-2">
-              <Repeat className="h-4 w-4" />
+          <div className="p-4 border rounded-lg bg-green-50">
+            <h3 className="font-medium text-green-800 mb-3 flex items-center gap-2">
+              <Repeat className="h-3 w-3" />
               Repeated Donors
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Count</span>
-                <span className="font-medium">0</span>
+                <span className="text-xs text-gray-600">Count</span>
+                <span className="font-medium text-sm">0</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Amount</span>
-                <span className="font-medium">₹0</span>
+                <span className="text-xs text-gray-600">Amount</span>
+                <span className="font-medium text-sm">₹0</span>
               </div>
             </div>
           </div>
