@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, MapPin, Phone, Cake, Gift2 } from 'lucide-react';
+import { Package, MapPin, Phone, Cake, Gift } from 'lucide-react';
 
 const DispatchSummarySection = () => {
   return (
@@ -109,7 +109,7 @@ const DispatchSummarySection = () => {
         <Card className="shadow-md">
           <CardHeader className="border-l-4 border-yellow-600">
             <CardTitle className="text-lg font-semibold flex items-center gap-2">
-              <Gift2 className="h-5 w-5" />
+              <Gift className="h-5 w-5" />
               Cake Dispatches
             </CardTitle>
           </CardHeader>
