@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calendar, Package, FileText, Users, Settings, Home, Bell, User, BarChart, List, Truck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,12 +9,11 @@ import ShipmentTracker from '@/components/birthday/ShipmentTracker';
 import MasterFile from '@/components/birthday/MasterFile';
 import BirthdayReportTabs from '@/components/birthday/BirthdayReportTabs';
 import BirthdayListView from '@/components/birthday/BirthdayListView';
-
 const BirthdayModule = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
-
-  return (
-    <div className="min-h-screen bg-gray-50" style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+  return <div className="min-h-screen bg-gray-50" style={{
+    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+  }}>
       {/* Header Navigation */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-full mx-auto px-4">
@@ -23,10 +21,10 @@ const BirthdayModule = () => {
             {/* Left - Logo and Title */}
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-3">
-                <img src="/lovable-uploads/35fa8ea7-c41b-4754-ae78-e98879b2d0aa.png" alt="ISKCON" className="h-8 w-8" />
+                <img alt="ISKCON" className="h-8 w-8" src="/lovable-uploads/a5a1275e-9c82-468b-938c-3fa2c7580675.png" />
                 <div>
-                  <h1 className="text-lg font-semibold text-gray-900">ISKCON Juhu, Mumbai</h1>
-                  <p className="text-sm text-gray-600">International Society for Krishna Consciousness</p>
+                  
+                  
                 </div>
               </div>
 
@@ -77,59 +75,35 @@ const BirthdayModule = () => {
         {/* Module Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-8 bg-white border border-gray-200">
-            <TabsTrigger 
-              value="dashboard" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="dashboard" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <Home className="w-4 h-4" />
               <span>Dashboard</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="birthday-list" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="birthday-list" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <List className="w-4 h-4" />
               <span>Birthday List</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="planning" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="planning" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <FileText className="w-4 h-4" />
               <span>Planning Report</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="custom" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="custom" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <Package className="w-4 h-4" />
               <span>Custom Dispatch</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="queue" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="queue" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <Calendar className="w-4 h-4" />
               <span>Dispatch Queue</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="tracker" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="tracker" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <Truck className="w-4 h-4" />
               <span>Shipment Tracker</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="reports" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="reports" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <BarChart className="w-4 h-4" />
               <span>Reports</span>
             </TabsTrigger>
-            <TabsTrigger 
-              value="master" 
-              className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white"
-            >
+            <TabsTrigger value="master" className="flex items-center space-x-2 data-[state=active]:bg-[#b33324] data-[state=active]:text-white">
               <Settings className="w-4 h-4" />
               <span>Master File</span>
             </TabsTrigger>
@@ -168,8 +142,6 @@ const BirthdayModule = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default BirthdayModule;
