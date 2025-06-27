@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
+import ManagementDashboard from "./pages/ManagementDashboard";
 import MisReports from "./pages/MisReports";
 import MisDashboard from "./pages/MisDashboard";
 import MisDashboardNew from "./pages/MisDashboardNew";
@@ -93,6 +94,7 @@ const App = () => (
           
           {/* Main Pages */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/management-dashboard" element={<ManagementDashboard />} />
           <Route path="/mis/reports" element={<MisReports />} />
           <Route path="/mis/dashboard" element={<MisDashboard />} />
           <Route path="/mis/dashboard-new" element={<MisDashboardNew />} />
