@@ -29,7 +29,7 @@ const BirthdayModule = () => {
               </div>
 
               {/* Navigation Menu */}
-              <nav className="hidden md:flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-2">
                 <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Dashboard</a>
                 <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Birthday List</a>
                 <a href="#" className="text-gray-700 hover:text-[#b33324] px-3 py-2 text-sm font-medium">Planning Report</a>
