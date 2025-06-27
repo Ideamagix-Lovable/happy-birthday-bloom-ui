@@ -64,37 +64,33 @@ const ManagementDashboard = () => {
 
           {/* Compact Grid Layout */}
           <div className="space-y-4">
-            {/* Row 1: Total Donation */}
-            <ManagementStats />
-
-            {/* Row 2: Donor Analysis & Birthday/Anniversary Data */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Row 1: Total Donation, Donor Analysis, Birthday/Anniversary Data, Daily Trends */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <ManagementStats />
               <DonorAnalysis />
               <BirthdayAnniversaryData />
+              <DailyTrendsChart />
             </div>
 
-            {/* Row 3: Daily Trends Chart */}
-            <DailyTrendsChart />
-
-            {/* Row 4: Top Donors Table */}
+            {/* Row 2: Top Donors Table */}
             <TopDonorsManagement />
 
-            {/* Row 5: Dispatch Summary */}
+            {/* Row 3: Dispatch Summary Section */}
             <DispatchSummarySection />
 
-            {/* Row 6: Calls Analytics */}
+            {/* Row 4: Calls Analytics */}
             <CallsAnalytics />
 
-            {/* Row 7: Response Analytics & Source of Donation */}
+            {/* Row 5: Response Analytics & Source of Donation */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <ResponseAnalytics />
               <SourceOfDonation />
             </div>
 
-            {/* Row 8: Schemes and Ranges */}
+            {/* Row 6: Schemes and Ranges */}
             <SchemesAndRanges />
 
-            {/* Row 9: Top Locations */}
+            {/* Row 7: Top Locations */}
             <TopLocations />
           </div>
         </div>

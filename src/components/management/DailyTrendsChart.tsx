@@ -36,10 +36,10 @@ const DailyTrendsChart = () => {
 
   return (
     <Card className="shadow-sm">
-      <CardHeader className="border-l-4 border-indigo-600 pb-3">
+      <CardHeader className="border-l-4 border-indigo-600 pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
+          <CardTitle className="text-sm font-semibold flex items-center gap-2">
+            <TrendingUp className="h-3 w-3" />
             Daily Trends
           </CardTitle>
           <div className="flex gap-1">
@@ -47,7 +47,7 @@ const DailyTrendsChart = () => {
               variant={activeFilter === 'amount' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveFilter('amount')}
-              className="text-xs px-3 py-1 h-7"
+              className="text-xs px-2 py-1 h-6"
             >
               Amount
             </Button>
@@ -55,23 +55,24 @@ const DailyTrendsChart = () => {
               variant={activeFilter === 'count' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveFilter('count')}
-              className="text-xs px-3 py-1 h-7"
+              className="text-xs px-2 py-1 h-6"
             >
               Count
             </Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pt-3">
-        <ChartContainer config={chartConfig} className="h-64">
+      <CardContent className="pt-2">
+        <ChartContainer config={chartConfig} className="h-32">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dummyData}>
-              <XAxis dataKey="time" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} />
+            <BarChart data={dummyData} barCategoryGap="20%">
+              <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+              <YAxis tick={{ fontSize: 10 }} />
               <Bar 
                 dataKey={activeFilter} 
                 fill={activeFilter === 'amount' ? '#3b82f6' : '#10b981'} 
-                radius={[2, 2, 0, 0]} 
+                radius={[1, 1, 0, 0]}
+                maxBarSize={15}
               />
               <ChartTooltip content={<ChartTooltipContent />} />
             </BarChart>
