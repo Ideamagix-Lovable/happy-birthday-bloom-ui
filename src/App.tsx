@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +7,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import MisReports from "./pages/MisReports";
 import MisDashboard from "./pages/MisDashboard";
+import MisDashboardNew from "./pages/MisDashboardNew";
 import MisAnalytics from "./pages/MisAnalytics";
 import Accounts from "./pages/Accounts";
 import Service from "./pages/Service";
@@ -95,6 +95,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/mis/reports" element={<MisReports />} />
           <Route path="/mis/dashboard" element={<MisDashboard />} />
+          <Route path="/mis/dashboard-new" element={<MisDashboardNew />} />
           <Route path="/mis/analytics" element={<MisAnalytics />} />
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/service" element={<Service />} />
