@@ -3,7 +3,10 @@ import Navigation from '@/components/Navigation';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { FilterControls } from '@/components/campaigns/FilterControls';
+import { SavedFilters } from '@/components/campaigns/SavedFilters';
+import { DonorViewOptions } from '@/components/campaigns/DonorViewOptions';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -13,14 +16,26 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getRandomDonorCount } from '@/utils/campaignData';
 import { getRandomDonorSample } from '@/utils/donorData';
 import { format } from 'date-fns';
+import { DonorViewType, SavedFilter } from '@/types/campaign';
 
 const CampaignFilterPage = () => {
-  const [logicOperator, setLogicOperator] = useState<'AND' | 'OR'>('AND');
   const [donorCount, setDonorCount] = useState<number | null>(null);
   const [showDialog, setShowDialog] = useState(false);
   const [donors, setDonors] = useState(getRandomDonorSample(10));
+  const [donorView, setDonorView] = useState<DonorViewType>('all');
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // Calculate donor view counts
+  const totalDonors = donorCount || 45234;
+  const campaignDonors = Math.floor(totalDonors * 0.27);
+  const notCampaignDonors = totalDonors - campaignDonors;
+
+  const donorViewCounts = {
+    all: totalDonors,
+    campaign: campaignDonors,
+    notCampaign: notCampaignDonors,
+  };
 
   const handleSubmitCount = () => {
     const count = getRandomDonorCount(10000, 80000);
@@ -36,6 +51,18 @@ const CampaignFilterPage = () => {
     setShowDialog(false);
     toast.success('Campaign donors added successfully!');
     navigate(`/campaigns/${id}/pool`);
+  };
+
+  const handleLoadFilter = (filter: SavedFilter) => {
+    setDonorCount(filter.donorCount);
+    // Load filter criteria here when implemented
+  };
+
+  // Filter donors based on view selection
+  const getFilteredDonors = () => {
+    if (donorView === 'all') return donors;
+    if (donorView === 'campaign') return donors.slice(0, 3);
+    return donors.slice(3);
   };
 
   return (
@@ -60,49 +87,71 @@ const CampaignFilterPage = () => {
             <h1 className="text-2xl font-bold text-gray-900">Configure Donor Filters</h1>
           </div>
 
-          {/* Donor Count Card */}
-          {donorCount !== null && (
-            <Card className="bg-white border border-gray-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Matching Donors</p>
-                    <p className="text-4xl font-bold mt-2 text-gray-900">{donorCount.toLocaleString()}</p>
-                  </div>
-                  <Users className="h-12 w-12 text-primary" />
+          {/* Saved Filters */}
+          <SavedFilters 
+            currentDonorCount={donorCount} 
+            onLoadFilter={handleLoadFilter}
+          />
+
+          {/* Donor Count Card - Always Visible */}
+          <Card className="bg-white border border-gray-200">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Matching Donors</p>
+                  <p className="text-4xl font-bold mt-2 text-gray-900">
+                    {donorCount ? donorCount.toLocaleString() : '—'}
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+                <Users className="h-12 w-12 text-primary" />
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Filter Controls */}
-          <FilterControls logicOperator={logicOperator} onLogicOperatorChange={setLogicOperator} />
+          {/* Accordion Sections */}
+          <Accordion type="multiple" defaultValue={['filters', 'preview']} className="space-y-4">
+            {/* Filter Parameters Section */}
+            <AccordionItem value="filters" className="border rounded-lg bg-white">
+              <AccordionTrigger className="px-6 hover:no-underline">
+                <h3 className="text-lg font-semibold">Filter Parameters</h3>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6">
+                <FilterControls />
+                
+                {/* Action Buttons */}
+                <div className="flex gap-4 mt-6">
+                  <Button 
+                    onClick={handleSubmitCount} 
+                    size="lg"
+                    variant="outline"
+                    className="border-primary text-primary hover:bg-gray-50"
+                  >
+                    Submit & Count
+                  </Button>
+                  <Button
+                    onClick={handleGenerate}
+                    disabled={donorCount === null}
+                    size="lg"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Add Donors to Campaign
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4">
-            <Button 
-              onClick={handleSubmitCount} 
-              size="lg"
-              variant="outline"
-              className="border-primary text-primary hover:bg-gray-50"
-            >
-              Submit & Count
-            </Button>
-            <Button
-              onClick={handleGenerate}
-              disabled={donorCount === null}
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              Add Donors to Campaign
-            </Button>
-          </div>
-
-          {/* Donor Preview Table */}
-          {donorCount !== null && (
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Donor Preview (Sample)</h3>
+            {/* Donor Preview Section */}
+            <AccordionItem value="preview" className="border rounded-lg bg-white">
+              <AccordionTrigger className="px-6 hover:no-underline">
+                <h3 className="text-lg font-semibold">Donor Preview (Sample)</h3>
+              </AccordionTrigger>
+              <AccordionContent className="px-6 pb-6">
+                <DonorViewOptions
+                  selectedView={donorView}
+                  onViewChange={setDonorView}
+                  counts={donorViewCounts}
+                />
+                
                 <div className="border rounded-lg">
                   <Table>
                     <TableHeader>
@@ -117,7 +166,7 @@ const CampaignFilterPage = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {donors.map((donor) => (
+                      {getFilteredDonors().map((donor) => (
                         <TableRow key={donor.dmsId}>
                           <TableCell className="font-mono text-sm">{donor.dmsId}</TableCell>
                           <TableCell className="font-medium">{donor.name}</TableCell>
@@ -133,9 +182,9 @@ const CampaignFilterPage = () => {
                     </TableBody>
                   </Table>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
 

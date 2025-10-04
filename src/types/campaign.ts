@@ -71,3 +71,19 @@ export const GIFT_PROTOCOLS: GiftProtocol[] = [
 ];
 
 export const DONOR_CATEGORIES = ['Goloka', 'Atala', 'Swarga', 'Vaikuntha', 'Bhumi'];
+
+export interface SavedFilter {
+  id: string;
+  name: string;
+  donorCount: number;
+  criteria: Partial<FilterCriteria>;
+  createdAt: Date;
+}
+
+export type DonorViewType = 'all' | 'campaign' | 'not-campaign';
+
+export interface DonorViewCounts {
+  all: number;
+  campaign: number;
+  notCampaign: number;
+}

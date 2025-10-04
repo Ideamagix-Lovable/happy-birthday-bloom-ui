@@ -4,18 +4,10 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+
 import { DONOR_CATEGORIES } from '@/types/campaign';
 
-interface FilterControlsProps {
-  logicOperator: 'AND' | 'OR';
-  onLogicOperatorChange: (value: 'AND' | 'OR') => void;
-}
-
-export const FilterControls: React.FC<FilterControlsProps> = ({
-  logicOperator,
-  onLogicOperatorChange,
-}) => {
+export const FilterControls: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
 
   const handleCategoryToggle = (category: string) => {
@@ -26,25 +18,7 @@ export const FilterControls: React.FC<FilterControlsProps> = ({
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Filter Parameters</CardTitle>
-          <div className="flex items-center gap-4">
-            <Label>Logic Operator:</Label>
-            <RadioGroup value={logicOperator} onValueChange={(v) => onLogicOperatorChange(v as 'AND' | 'OR')} className="flex gap-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="AND" id="and" />
-                <Label htmlFor="and">AND</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="OR" id="or" />
-                <Label htmlFor="or">OR</Label>
-              </div>
-            </RadioGroup>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Lifetime Donation Amount */}
           <div className="space-y-2">
