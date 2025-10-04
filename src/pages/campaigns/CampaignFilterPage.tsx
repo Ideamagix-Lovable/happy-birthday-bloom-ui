@@ -62,14 +62,14 @@ const CampaignFilterPage = () => {
 
           {/* Donor Count Card */}
           {donorCount !== null && (
-            <Card className="bg-gradient-to-r from-purple-600 to-blue-600 border-0 text-white">
+            <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-white/80">Matching Donors</p>
-                    <p className="text-4xl font-bold mt-2">{donorCount.toLocaleString()}</p>
+                    <p className="text-sm font-medium text-gray-600">Matching Donors</p>
+                    <p className="text-4xl font-bold mt-2 text-gray-900">{donorCount.toLocaleString()}</p>
                   </div>
-                  <Users className="h-12 w-12 text-white/60" />
+                  <Users className="h-12 w-12 text-primary" />
                 </div>
               </CardContent>
             </Card>
@@ -80,14 +80,19 @@ const CampaignFilterPage = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button onClick={handleSubmitCount} size="lg">
+            <Button 
+              onClick={handleSubmitCount} 
+              size="lg"
+              variant="outline"
+              className="border-primary text-primary hover:bg-gray-50"
+            >
               Submit & Count
             </Button>
             <Button
               onClick={handleGenerate}
               disabled={donorCount === null}
               size="lg"
-              className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Add Donors to Campaign
             </Button>

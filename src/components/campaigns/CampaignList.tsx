@@ -15,12 +15,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
   const navigate = useNavigate();
 
   const getStatusBadge = (status: Campaign['status']) => {
-    const variants = {
-      active: 'bg-green-100 text-green-800',
-      completed: 'bg-blue-100 text-blue-800',
-      draft: 'bg-gray-100 text-gray-800',
-    };
-    return <Badge className={variants[status]}>{status.toUpperCase()}</Badge>;
+    return <Badge variant="outline">{status.toUpperCase()}</Badge>;
   };
 
   return (
@@ -55,18 +50,22 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
               <TableCell>
                 <div className="flex gap-2">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => navigate(`/campaigns/${campaign.id}/pool`)}
+                    className="border-primary text-primary hover:bg-gray-50"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-4 w-4 mr-1" />
+                    View
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => navigate(`/campaigns/${campaign.id}/filters`)}
+                    className="border-primary text-primary hover:bg-gray-50"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-4 w-4 mr-1" />
+                    Edit
                   </Button>
                 </div>
               </TableCell>

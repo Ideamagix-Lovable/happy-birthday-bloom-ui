@@ -84,37 +84,31 @@ const DonorPoolPage = () => {
               title="Total Donors in Pool"
               value={stats.total.toLocaleString()}
               icon={Users}
-              gradient="bg-gradient-to-r from-purple-600 to-purple-700"
             />
             <StatCard
               title="Total Donors Assigned"
               value={stats.assigned.toLocaleString()}
               icon={UserCheck}
-              gradient="bg-gradient-to-r from-green-600 to-green-700"
             />
             <StatCard
               title="Total Donors Unassigned"
               value={stats.unassigned.toLocaleString()}
               icon={UserX}
-              gradient="bg-gradient-to-r from-red-600 to-red-700"
             />
             <StatCard
               title="Donors in Protocol 1"
               value={stats.protocol1.toLocaleString()}
               icon={Gift}
-              gradient="bg-gradient-to-r from-orange-600 to-orange-700"
             />
             <StatCard
               title="Donors in Protocol 2"
               value={stats.protocol2.toLocaleString()}
               icon={Package}
-              gradient="bg-gradient-to-r from-blue-600 to-blue-700"
             />
             <StatCard
               title="Donors in Protocol 3"
               value={stats.protocol3.toLocaleString()}
               icon={Box}
-              gradient="bg-gradient-to-r from-indigo-600 to-indigo-700"
             />
           </div>
 
@@ -187,13 +181,18 @@ const DonorPoolPage = () => {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button onClick={handleSubmitCount} size="lg">
+            <Button 
+              onClick={handleSubmitCount} 
+              size="lg"
+              variant="outline"
+              className="border-primary text-primary hover:bg-gray-50"
+            >
               Submit & Count
             </Button>
             <Button
               onClick={handleAssignGift}
               size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Assign Gift
             </Button>
@@ -231,15 +230,7 @@ const DonorPoolPage = () => {
                         <TableCell>₹{donor.lifetimeDonation.toLocaleString()}</TableCell>
                         <TableCell>{format(donor.lastDonation, 'dd MMM yyyy')}</TableCell>
                         <TableCell>
-                          <Badge
-                            className={
-                              donor.priority === 'high'
-                                ? 'bg-red-100 text-red-800'
-                                : donor.priority === 'medium'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-green-100 text-green-800'
-                            }
-                          >
+                          <Badge variant="outline">
                             {donor.priority?.toUpperCase()}
                           </Badge>
                         </TableCell>

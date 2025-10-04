@@ -37,8 +37,8 @@ export const CreateCampaignDialog: React.FC = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
-          <Plus className="mr-2 h-4 w-4" />
+        <Button variant="outline" size="lg" className="gap-2 border-primary text-primary hover:bg-gray-50">
+          <Plus className="h-5 w-5" />
           Create Campaign
         </Button>
       </DialogTrigger>
@@ -117,7 +117,9 @@ export const CreateCampaignDialog: React.FC = () => {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>Create Campaign</Button>
+          <Button onClick={handleSubmit} className="bg-primary text-primary-foreground hover:bg-primary/90">
+            Create Campaign
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
