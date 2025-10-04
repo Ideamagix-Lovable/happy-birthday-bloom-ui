@@ -44,6 +44,9 @@ import DiallerListNew from "./pages/DiallerListNew";
 import DiallerListReview from "./pages/DiallerListReview";
 import DiallerAdmins from "./pages/DiallerAdmins";
 import Campaigns from "./pages/Campaigns";
+import CampaignDashboard from "./pages/campaigns/CampaignDashboard";
+import CampaignFilterPage from "./pages/campaigns/CampaignFilterPage";
+import DonorPoolPage from "./pages/campaigns/DonorPoolPage";
 import Disposition from "./pages/Disposition";
 import SubDisposition from "./pages/SubDisposition";
 
@@ -149,6 +152,11 @@ const App = () => (
           <Route path="/dialler/disposition" element={<Disposition />} />
           <Route path="/dialler/sub-disposition" element={<SubDisposition />} />
           <Route path="/dialler/details/:id" element={<DiallerDetail />} />
+          
+          {/* Campaign Module Pages */}
+          <Route path="/campaigns" element={<CampaignDashboard />} />
+          <Route path="/campaigns/:id/filters" element={<CampaignFilterPage />} />
+          <Route path="/campaigns/:id/pool" element={<DonorPoolPage />} />
           
           {/* Miscellaneous Pages */}
           <Route path="/miscellaneous/merged-donors" element={<MergedDonors />} />

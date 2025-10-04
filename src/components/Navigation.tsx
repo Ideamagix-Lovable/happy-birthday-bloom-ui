@@ -225,6 +225,10 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <Link to="/campaigns" className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
+              Campaigns
+            </Link>
+
             <Link to="/service" className="px-3 py-2 text-gray-700 hover:text-[#b33324] font-medium text-[11px]">
               Service
             </Link>
