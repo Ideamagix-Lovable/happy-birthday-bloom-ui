@@ -27,6 +27,14 @@ const DonorPoolPage = () => {
   const [selectedProtocol, setSelectedProtocol] = useState<string>('');
   const [campaignLabel, setCampaignLabel] = useState<string>('');
   const [selectedDonors, setSelectedDonors] = useState<string[]>([]);
+  const [stats, setStats] = useState({
+    total: 45678,
+    assigned: 0,
+    unassigned: 45678,
+    protocol1: 0,
+    protocol2: 0,
+    protocol3: 0,
+  });
   const { id } = useParams();
 
   const handleSelectAll = (checked: boolean) => {
@@ -73,14 +81,6 @@ const DonorPoolPage = () => {
     setShowDispatchDialog(false);
   };
 
-  const stats = {
-    total: 45678,
-    assigned: 0,
-    unassigned: 45678,
-    protocol1: 0,
-    protocol2: 0,
-    protocol3: 0,
-  };
 
   const handleSubmitCount = () => {
     const count = getRandomDonorCount(10000, 30000);
@@ -101,9 +101,29 @@ const DonorPoolPage = () => {
       return;
     }
     
-    toast.success(`Gift protocol assigned to ${selectedDonors.length > 0 ? selectedDonors.length : '5'} donors`);
+    const assignedCount = selectedDonors.length > 0 ? selectedDonors.length : 5;
+    
+    // Update stats based on selected protocol
+    setStats(prev => {
+      const newStats = { ...prev };
+      newStats.assigned += assignedCount;
+      newStats.unassigned -= assignedCount;
+      
+      if (selectedProtocol === 'protocol-1') {
+        newStats.protocol1 += assignedCount;
+      } else if (selectedProtocol === 'protocol-2') {
+        newStats.protocol2 += assignedCount;
+      } else if (selectedProtocol === 'protocol-3') {
+        newStats.protocol3 += assignedCount;
+      }
+      
+      return newStats;
+    });
+    
+    toast.success(`Gift protocol assigned to ${assignedCount} donors`);
     setShowAssignDialog(false);
     setSelectedProtocol('');
+    setSelectedDonors([]);
   };
 
   return (
