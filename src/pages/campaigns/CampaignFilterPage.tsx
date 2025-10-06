@@ -22,7 +22,7 @@ import { format } from 'date-fns';
 import { DonorViewType, SavedFilter } from '@/types/campaign';
 
 const CampaignFilterPage = () => {
-  const [donorCount, setDonorCount] = useState<number | null>(null);
+  const [donorCount, setDonorCount] = useState<number | null>(45234);
   const [showDialog, setShowDialog] = useState(false);
   const [donors, setDonors] = useState(getRandomDonorSample(10));
   const [donorView, setDonorView] = useState<DonorViewType>('all');
@@ -103,18 +103,7 @@ const CampaignFilterPage = () => {
                     {/* Add Filter Parameter Button */}
                     <AddFilterParameterDialog />
                     
-                    {/* Matching Donors Count */}
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-md">
-                      <Users className="h-4 w-4 text-primary" />
-                      <div className="text-right">
-                        <p className="text-xs text-muted-foreground">Matching Donors</p>
-                        <p className="text-sm font-bold">
-                          {donorCount ? donorCount.toLocaleString() : '—'}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Save Filter Button */}
+                    {/* Saved Filters Button */}
                     <SavedFilters 
                       currentDonorCount={donorCount} 
                       onLoadFilter={handleLoadFilter}
@@ -125,24 +114,40 @@ const CampaignFilterPage = () => {
               <AccordionContent className="px-6 pb-6">
                 <FilterControls />
                 
-                {/* Action Buttons */}
-                <div className="flex gap-4 mt-6">
-                  <Button 
-                    onClick={handleSubmitCount} 
-                    size="lg"
-                    variant="outline"
-                    className="border-primary text-primary hover:bg-gray-50"
-                  >
-                    Submit & Count
-                  </Button>
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={donorCount === null}
-                    size="lg"
-                    className="bg-primary text-primary-foreground hover:bg-primary/90"
-                  >
-                    Add Donors to Campaign
-                  </Button>
+                {/* Action Buttons and Matching Donors */}
+                <div className="flex items-center justify-between mt-6">
+                  <div className="flex gap-4">
+                    <Button 
+                      onClick={handleSubmitCount} 
+                      size="lg"
+                      variant="outline"
+                      className="border-primary text-primary hover:bg-gray-50"
+                    >
+                      Submit & Count
+                    </Button>
+                    <Button
+                      onClick={handleGenerate}
+                      disabled={donorCount === null}
+                      size="lg"
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      Add Donors to Campaign
+                    </Button>
+                    <SavedFilters 
+                      currentDonorCount={donorCount} 
+                      onLoadFilter={handleLoadFilter}
+                      variant="button"
+                    />
+                  </div>
+                  
+                  {/* Matching Donors Count - Inline */}
+                  <div className="flex items-center gap-2 text-sm">
+                    <Users className="h-4 w-4 text-primary" />
+                    <span className="text-muted-foreground">Matching Donors:</span>
+                    <span className="font-bold text-lg">
+                      {donorCount ? donorCount.toLocaleString() : '—'}
+                    </span>
+                  </div>
                 </div>
               </AccordionContent>
             </AccordionItem>

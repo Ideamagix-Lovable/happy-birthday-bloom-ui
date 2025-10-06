@@ -75,11 +75,11 @@ const DonorPoolPage = () => {
 
   const stats = {
     total: 45678,
-    assigned: 32450,
-    unassigned: 13228,
-    protocol1: 15200,
-    protocol2: 10850,
-    protocol3: 6400,
+    assigned: 0,
+    unassigned: 45678,
+    protocol1: 0,
+    protocol2: 0,
+    protocol3: 0,
   };
 
   const handleSubmitCount = () => {
@@ -238,6 +238,21 @@ const DonorPoolPage = () => {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div className="space-y-2">
+                  <Label>Saved Filters</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select saved filter" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="high-value-donors">High Value Donors (12,345)</SelectItem>
+                      <SelectItem value="recent-active">Recent Active (8,920)</SelectItem>
+                      <SelectItem value="vip-segment">VIP Segment (2,450)</SelectItem>
+                      <SelectItem value="lapsed-donors">Lapsed Donors (5,123)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -257,7 +272,7 @@ const DonorPoolPage = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              Assign Gift
+              Assign Gift and Create Dispatched
             </Button>
           </div>
 
