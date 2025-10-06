@@ -1,7 +1,7 @@
 import React from 'react';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { DonorViewType, DonorViewCounts } from '@/types/campaign';
+import { cn } from '@/lib/utils';
 
 interface DonorViewOptionsProps {
   selectedView: DonorViewType;
@@ -9,30 +9,43 @@ interface DonorViewOptionsProps {
   counts: DonorViewCounts;
 }
 
-export const DonorViewOptions = ({ selectedView, onViewChange, counts }: DonorViewOptionsProps) => {
+export const DonorViewOptions: React.FC<DonorViewOptionsProps> = ({
+  selectedView,
+  onViewChange,
+  counts,
+}) => {
   return (
-    <div className="mb-4 p-4 border rounded-lg bg-white">
-      <p className="text-sm font-semibold mb-3">Donor View Options</p>
-      <RadioGroup value={selectedView} onValueChange={(value) => onViewChange(value as DonorViewType)}>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="all" id="view-all" />
-          <Label htmlFor="view-all" className="cursor-pointer">
-            All Donors ({counts.all.toLocaleString()})
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="campaign" id="view-campaign" />
-          <Label htmlFor="view-campaign" className="cursor-pointer">
-            Campaign Donors ({counts.campaign.toLocaleString()})
-          </Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="not-campaign" id="view-not-campaign" />
-          <Label htmlFor="view-not-campaign" className="cursor-pointer">
-            Not Campaign Donors ({counts.notCampaign.toLocaleString()})
-          </Label>
-        </div>
-      </RadioGroup>
+    <div className="flex justify-end gap-2 mb-4">
+      <Button
+        variant={selectedView === 'all' ? 'default' : 'outline'}
+        size="sm"
+        onClick={() => onViewChange('all')}
+        className={cn(
+          selectedView === 'all' && 'bg-primary text-primary-foreground'
+        )}
+      >
+        All Donors ({counts.all.toLocaleString()})
+      </Button>
+      <Button
+        variant={selectedView === 'campaign' ? 'default' : 'outline'}
+        size="sm"
+        onClick={() => onViewChange('campaign')}
+        className={cn(
+          selectedView === 'campaign' && 'bg-primary text-primary-foreground'
+        )}
+      >
+        Campaign Donors ({counts.campaign.toLocaleString()})
+      </Button>
+      <Button
+        variant={selectedView === 'not-campaign' ? 'default' : 'outline'}
+        size="sm"
+        onClick={() => onViewChange('not-campaign')}
+        className={cn(
+          selectedView === 'not-campaign' && 'bg-primary text-primary-foreground'
+        )}
+      >
+        Not Campaign Donors ({counts.notCampaign.toLocaleString()})
+      </Button>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { FilterControls } from '@/components/campaigns/FilterControls';
 import { SavedFilters } from '@/components/campaigns/SavedFilters';
 import { DonorViewOptions } from '@/components/campaigns/DonorViewOptions';
+import { AddFilterParameterDialog } from '@/components/campaigns/AddFilterParameterDialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -62,7 +63,8 @@ const CampaignFilterPage = () => {
   const getFilteredDonors = () => {
     if (donorView === 'all') return donors;
     if (donorView === 'campaign') return donors.slice(0, 3);
-    return donors.slice(3);
+    if (donorView === 'not-campaign') return donors.slice(3);
+    return donors;
   };
 
   return (
@@ -84,38 +86,42 @@ const CampaignFilterPage = () => {
           </Breadcrumb>
 
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Configure Donor Filters</h1>
+            <h1 className="text-2xl font-bold">Configure Donor Filters</h1>
           </div>
-
-          {/* Saved Filters */}
-          <SavedFilters 
-            currentDonorCount={donorCount} 
-            onLoadFilter={handleLoadFilter}
-          />
-
-          {/* Donor Count Card - Always Visible */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Matching Donors</p>
-                  <p className="text-4xl font-bold mt-2 text-gray-900">
-                    {donorCount ? donorCount.toLocaleString() : '—'}
-                  </p>
-                </div>
-                <Users className="h-12 w-12 text-primary" />
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Accordion Sections */}
           <Accordion type="multiple" defaultValue={['filters', 'preview']} className="space-y-4">
             {/* Filter Parameters Section */}
             <AccordionItem value="filters" className="border rounded-lg bg-white">
               <AccordionTrigger className="px-6 hover:no-underline">
-                <h3 className="text-lg font-semibold">Filter Parameters</h3>
+                <div className="flex items-center justify-between w-full pr-4">
+                  <h3 className="text-lg font-semibold">Filter Parameters</h3>
+                  <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                    {/* Matching Donors Count */}
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-md">
+                      <Users className="h-4 w-4 text-primary" />
+                      <div className="text-right">
+                        <p className="text-xs text-muted-foreground">Matching Donors</p>
+                        <p className="text-sm font-bold">
+                          {donorCount ? donorCount.toLocaleString() : '—'}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Save Filter Button */}
+                    <SavedFilters 
+                      currentDonorCount={donorCount} 
+                      onLoadFilter={handleLoadFilter}
+                    />
+                  </div>
+                </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6">
+                {/* Add Filter Parameter Button */}
+                <div className="mb-4">
+                  <AddFilterParameterDialog />
+                </div>
+
                 <FilterControls />
                 
                 {/* Action Buttons */}
