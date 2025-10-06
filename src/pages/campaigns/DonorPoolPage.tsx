@@ -110,11 +110,11 @@ const DonorPoolPage = () => {
       newStats.assigned += assignedCount;
       newStats.unassigned -= assignedCount;
       
-      if (selectedProtocol === 'protocol-1') {
+      if (selectedProtocol === 'protocol1') {
         newStats.protocol1 += assignedCount;
-      } else if (selectedProtocol === 'protocol-2') {
+      } else if (selectedProtocol === 'protocol2') {
         newStats.protocol2 += assignedCount;
-      } else if (selectedProtocol === 'protocol-3') {
+      } else if (selectedProtocol === 'protocol3') {
         newStats.protocol3 += assignedCount;
       }
       
