@@ -101,7 +101,8 @@ const DonorPoolPage = () => {
       return;
     }
     
-    const assignedCount = selectedDonors.length > 0 ? selectedDonors.length : 5;
+    // Use filteredCount if available, otherwise selected donors, otherwise default to 5
+    const assignedCount = filteredCount || (selectedDonors.length > 0 ? selectedDonors.length : 5);
     
     // Update stats based on selected protocol
     setStats(prev => {
@@ -120,10 +121,11 @@ const DonorPoolPage = () => {
       return newStats;
     });
     
-    toast.success(`Gift protocol assigned to ${assignedCount} donors`);
+    toast.success(`Gift protocol assigned to ${assignedCount.toLocaleString()} donors`);
     setShowAssignDialog(false);
     setSelectedProtocol('');
     setSelectedDonors([]);
+    setFilteredCount(null);
   };
 
   return (
@@ -301,20 +303,32 @@ const DonorPoolPage = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Donor Pool</h3>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    onClick={handleRevoke}
-                    disabled={selectedDonors.length === 0}
-                  >
-                    Revoke ({selectedDonors.length})
-                  </Button>
-                  <Button
-                    onClick={handleSendToDispatch}
-                    disabled={selectedDonors.length === 0}
-                  >
-                    Send to Dispatch ({selectedDonors.length})
-                  </Button>
+                <div className="flex items-center gap-4">
+                  {filteredCount && (
+                    <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
+                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-sm font-medium text-green-900">
+                        Found {filteredCount.toLocaleString()} matching donors
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={handleRevoke}
+                      disabled={selectedDonors.length === 0}
+                    >
+                      Revoke ({selectedDonors.length})
+                    </Button>
+                    <Button
+                      onClick={handleSendToDispatch}
+                      disabled={selectedDonors.length === 0}
+                    >
+                      Send to Dispatch ({selectedDonors.length})
+                    </Button>
+                  </div>
                 </div>
               </div>
               <div className="border rounded-lg">
@@ -393,20 +407,29 @@ const DonorPoolPage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           
-          <div className="space-y-2 py-4">
-            <Label>Gift Protocol</Label>
-            <Select value={selectedProtocol} onValueChange={setSelectedProtocol}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select protocol" />
-              </SelectTrigger>
-              <SelectContent>
-                {GIFT_PROTOCOLS.map((protocol) => (
-                  <SelectItem key={protocol.id} value={protocol.id}>
-                    {protocol.name} - {protocol.description}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="space-y-4 py-4">
+            {filteredCount && (
+              <div className="p-3 bg-muted rounded-lg">
+                <p className="text-sm font-medium">
+                  Assigning to {filteredCount.toLocaleString()} filtered donors
+                </p>
+              </div>
+            )}
+            <div className="space-y-2">
+              <Label>Gift Protocol</Label>
+              <Select value={selectedProtocol} onValueChange={setSelectedProtocol}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select protocol" />
+                </SelectTrigger>
+                <SelectContent>
+                  {GIFT_PROTOCOLS.map((protocol) => (
+                    <SelectItem key={protocol.id} value={protocol.id}>
+                      {protocol.name} - {protocol.description}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <AlertDialogFooter>
