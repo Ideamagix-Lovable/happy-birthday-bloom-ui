@@ -4,6 +4,8 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { FilterControls } from '@/components/campaigns/FilterControls';
 import { SavedFilters } from '@/components/campaigns/SavedFilters';
 import { DonorViewOptions } from '@/components/campaigns/DonorViewOptions';
@@ -24,6 +26,7 @@ const CampaignFilterPage = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [donors, setDonors] = useState(getRandomDonorSample(10));
   const [donorView, setDonorView] = useState<DonorViewType>('all');
+  const [campaignLabel, setCampaignLabel] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -97,6 +100,9 @@ const CampaignFilterPage = () => {
                 <div className="flex items-center justify-between w-full pr-4">
                   <h3 className="text-lg font-semibold">Filter Parameters</h3>
                   <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                    {/* Add Filter Parameter Button */}
+                    <AddFilterParameterDialog />
+                    
                     {/* Matching Donors Count */}
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-md">
                       <Users className="h-4 w-4 text-primary" />
@@ -117,11 +123,6 @@ const CampaignFilterPage = () => {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6">
-                {/* Add Filter Parameter Button */}
-                <div className="mb-4">
-                  <AddFilterParameterDialog />
-                </div>
-
                 <FilterControls />
                 
                 {/* Action Buttons */}
@@ -149,15 +150,18 @@ const CampaignFilterPage = () => {
             {/* Donor Preview Section */}
             <AccordionItem value="preview" className="border rounded-lg bg-white">
               <AccordionTrigger className="px-6 hover:no-underline">
-                <h3 className="text-lg font-semibold">Donor Preview (Sample)</h3>
+                <div className="flex items-center justify-between w-full pr-4">
+                  <h3 className="text-lg font-semibold">Donor Preview (Sample)</h3>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <DonorViewOptions
+                      selectedView={donorView}
+                      onViewChange={setDonorView}
+                      counts={donorViewCounts}
+                    />
+                  </div>
+                </div>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-6">
-                <DonorViewOptions
-                  selectedView={donorView}
-                  onViewChange={setDonorView}
-                  counts={donorViewCounts}
-                />
-                
                 <div className="border rounded-lg">
                   <Table>
                     <TableHeader>
@@ -204,6 +208,16 @@ const CampaignFilterPage = () => {
               This action will create a donor pool for gift assignment.
             </AlertDialogDescription>
           </AlertDialogHeader>
+          <div className="py-4">
+            <Label htmlFor="campaign-label">Campaign Donors Label</Label>
+            <Input
+              id="campaign-label"
+              placeholder="Enter label for this donor group"
+              value={campaignLabel}
+              onChange={(e) => setCampaignLabel(e.target.value)}
+              className="mt-2"
+            />
+          </div>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleConfirmGenerate}>

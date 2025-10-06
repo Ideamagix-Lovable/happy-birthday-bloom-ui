@@ -15,7 +15,7 @@ export const DonorViewOptions: React.FC<DonorViewOptionsProps> = ({
   counts,
 }) => {
   return (
-    <div className="flex justify-end gap-2 mb-4">
+    <div className="flex justify-end gap-2">
       <Button
         variant={selectedView === 'all' ? 'default' : 'outline'}
         size="sm"

@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Users, UserCheck, UserX, Gift, Package, Box } from 'lucide-react';
 import { toast } from 'sonner';
@@ -21,9 +22,56 @@ const DonorPoolPage = () => {
   const [donors, setDonors] = useState(generateDonors(20));
   const [filteredCount, setFilteredCount] = useState<number | null>(null);
   const [showAssignDialog, setShowAssignDialog] = useState(false);
+  const [showRevokeDialog, setShowRevokeDialog] = useState(false);
+  const [showDispatchDialog, setShowDispatchDialog] = useState(false);
   const [selectedProtocol, setSelectedProtocol] = useState<string>('');
+  const [campaignLabel, setCampaignLabel] = useState<string>('');
   const [selectedDonors, setSelectedDonors] = useState<string[]>([]);
   const { id } = useParams();
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedDonors(donors.map(d => d.dmsId));
+    } else {
+      setSelectedDonors([]);
+    }
+  };
+
+  const handleSelectDonor = (dmsId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedDonors([...selectedDonors, dmsId]);
+    } else {
+      setSelectedDonors(selectedDonors.filter(id => id !== dmsId));
+    }
+  };
+
+  const handleRevoke = () => {
+    if (selectedDonors.length === 0) {
+      toast.error('Please select donors to revoke');
+      return;
+    }
+    setShowRevokeDialog(true);
+  };
+
+  const handleConfirmRevoke = () => {
+    toast.success(`Revoked ${selectedDonors.length} donors from campaign`);
+    setSelectedDonors([]);
+    setShowRevokeDialog(false);
+  };
+
+  const handleSendToDispatch = () => {
+    if (selectedDonors.length === 0) {
+      toast.error('Please select donors to send to dispatch');
+      return;
+    }
+    setShowDispatchDialog(true);
+  };
+
+  const handleConfirmDispatch = () => {
+    toast.success(`Sent ${selectedDonors.length} donors to dispatch`);
+    setSelectedDonors([]);
+    setShowDispatchDialog(false);
+  };
 
   const stats = {
     total: 45678,
@@ -175,6 +223,21 @@ const DonorPoolPage = () => {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div className="space-y-2">
+                  <Label>Campaign Donors Label</Label>
+                  <Select value={campaignLabel} onValueChange={setCampaignLabel}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select label" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="diwali-2024">Diwali 2024</SelectItem>
+                      <SelectItem value="new-year-2025">New Year 2025</SelectItem>
+                      <SelectItem value="premium-donors">Premium Donors</SelectItem>
+                      <SelectItem value="vip-donors">VIP Donors</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -201,11 +264,34 @@ const DonorPoolPage = () => {
           {/* Donor Pool Table */}
           <Card>
             <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Donor Pool</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Donor Pool</h3>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={handleRevoke}
+                    disabled={selectedDonors.length === 0}
+                  >
+                    Revoke ({selectedDonors.length})
+                  </Button>
+                  <Button
+                    onClick={handleSendToDispatch}
+                    disabled={selectedDonors.length === 0}
+                  >
+                    Send to Dispatch ({selectedDonors.length})
+                  </Button>
+                </div>
+              </div>
               <div className="border rounded-lg">
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className="w-12">
+                        <Checkbox
+                          checked={selectedDonors.length === donors.length}
+                          onCheckedChange={handleSelectAll}
+                        />
+                      </TableHead>
                       <TableHead>DMS ID</TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead>Location</TableHead>
@@ -220,6 +306,12 @@ const DonorPoolPage = () => {
                   <TableBody>
                     {donors.map((donor) => (
                       <TableRow key={donor.dmsId}>
+                        <TableCell>
+                          <Checkbox
+                            checked={selectedDonors.includes(donor.dmsId)}
+                            onCheckedChange={(checked) => handleSelectDonor(donor.dmsId, checked as boolean)}
+                          />
+                        </TableCell>
                         <TableCell className="font-mono text-sm">{donor.dmsId}</TableCell>
                         <TableCell className="font-medium">{donor.name}</TableCell>
                         <TableCell>{donor.location}</TableCell>
@@ -286,6 +378,44 @@ const DonorPoolPage = () => {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleConfirmAssign}>
               Assign Protocol
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Revoke Dialog */}
+      <AlertDialog open={showRevokeDialog} onOpenChange={setShowRevokeDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Revoke Donors from Campaign?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to revoke {selectedDonors.length} donors from this campaign?
+              This action will remove them from the donor pool.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmRevoke} className="bg-destructive text-destructive-foreground">
+              Revoke Donors
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Send to Dispatch Dialog */}
+      <AlertDialog open={showDispatchDialog} onOpenChange={setShowDispatchDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Send to Dispatch?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to send {selectedDonors.length} donors to dispatch?
+              This will create dispatch entries for the selected donors.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDispatch}>
+              Send to Dispatch
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
