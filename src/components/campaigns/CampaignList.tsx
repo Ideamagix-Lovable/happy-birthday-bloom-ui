@@ -20,19 +20,19 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
   };
 
   return (
-    <div className="border rounded-lg">
+    <div className="border rounded-lg overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="bg-gray-50/50 border-b">
             <TableHead className="w-8"></TableHead>
-            <TableHead>Campaign Name</TableHead>
-            <TableHead>Festival Date</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
-            <TableHead>Level</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Donor Count</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="font-semibold">Campaign Name</TableHead>
+            <TableHead className="font-semibold">Festival Date</TableHead>
+            <TableHead className="font-semibold">Start Date</TableHead>
+            <TableHead className="font-semibold">End Date</TableHead>
+            <TableHead className="font-semibold">Level</TableHead>
+            <TableHead className="font-semibold">Status</TableHead>
+            <TableHead className="font-semibold">Donor Count</TableHead>
+            <TableHead className="font-semibold">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
