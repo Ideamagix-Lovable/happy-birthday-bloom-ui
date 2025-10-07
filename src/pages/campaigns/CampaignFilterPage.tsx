@@ -6,8 +6,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FilterControls } from '@/components/campaigns/FilterControls';
 import { SavedFilters } from '@/components/campaigns/SavedFilters';
 import { DonorViewOptions } from '@/components/campaigns/DonorViewOptions';
@@ -215,68 +213,15 @@ const CampaignFilterPage = () => {
               This action will create a donor pool for gift assignment.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="pool-name">Pool Name</Label>
-              <Input
-                id="pool-name"
-                placeholder="Enter pool name"
-                value={campaignLabel}
-                onChange={(e) => setCampaignLabel(e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Overwrite/Skip Options</Label>
-              <div className="flex gap-4">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="overwrite" value="overwrite" defaultChecked />
-                  <span className="text-sm">Overwrite existing donors</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="overwrite" value="skip" />
-                  <span className="text-sm">Skip existing donors</span>
-                </label>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="remarks">Remarks</Label>
-              <Textarea
-                id="remarks"
-                placeholder="Add any remarks for this pool..."
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="gifts">Select Gifts (Multiple)</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select gifts" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="gift1">Gift A</SelectItem>
-                  <SelectItem value="gift2">Gift B</SelectItem>
-                  <SelectItem value="gift3">Gift C</SelectItem>
-                  <SelectItem value="gift4">Gift D</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Cultivator Option</Label>
-              <div className="flex gap-4">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="delivery" value="hand-delivery" defaultChecked />
-                  <span className="text-sm">Hand Delivery</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="delivery" value="dispatch-bhishma" />
-                  <span className="text-sm">Dispatch by Bhishma</span>
-                </label>
-              </div>
-            </div>
+          <div className="py-4">
+            <Label htmlFor="campaign-label">Campaign Donors Label</Label>
+            <Input
+              id="campaign-label"
+              placeholder="Enter label for this donor group"
+              value={campaignLabel}
+              onChange={(e) => setCampaignLabel(e.target.value)}
+              className="mt-2"
+            />
           </div>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

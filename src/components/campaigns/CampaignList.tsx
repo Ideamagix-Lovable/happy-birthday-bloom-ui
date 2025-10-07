@@ -6,7 +6,6 @@ import { Eye, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 import { Campaign } from '@/types/campaign';
 import { useNavigate } from 'react-router-dom';
-import { ExpandableRow } from './ExpandableRow';
 
 interface CampaignListProps {
   campaigns: Campaign[];
@@ -20,24 +19,23 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border rounded-lg">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-50/50 border-b">
-            <TableHead className="w-8"></TableHead>
-            <TableHead className="font-semibold">Campaign Name</TableHead>
-            <TableHead className="font-semibold">Festival Date</TableHead>
-            <TableHead className="font-semibold">Start Date</TableHead>
-            <TableHead className="font-semibold">End Date</TableHead>
-            <TableHead className="font-semibold">Level</TableHead>
-            <TableHead className="font-semibold">Status</TableHead>
-            <TableHead className="font-semibold">Donor Count</TableHead>
-            <TableHead className="font-semibold">Actions</TableHead>
+          <TableRow>
+            <TableHead>Campaign Name</TableHead>
+            <TableHead>Festival Date</TableHead>
+            <TableHead>Start Date</TableHead>
+            <TableHead>End Date</TableHead>
+            <TableHead>Level</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Donor Count</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {campaigns.map((campaign) => (
-            <ExpandableRow key={campaign.id} pools={campaign.pools} colSpan={9}>
+            <TableRow key={campaign.id}>
               <TableCell className="font-medium">{campaign.name}</TableCell>
               <TableCell>
                 {campaign.festivalDate ? format(campaign.festivalDate, 'dd MMM yyyy') : '-'}
@@ -54,10 +52,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/campaigns/${campaign.id}/pool`);
-                    }}
+                    onClick={() => navigate(`/campaigns/${campaign.id}/pool`)}
                     className="border-primary text-primary hover:bg-gray-50"
                   >
                     <Eye className="h-4 w-4 mr-1" />
@@ -66,10 +61,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/campaigns/${campaign.id}/filters`);
-                    }}
+                    onClick={() => navigate(`/campaigns/${campaign.id}/filters`)}
                     className="border-primary text-primary hover:bg-gray-50"
                   >
                     <Edit className="h-4 w-4 mr-1" />
@@ -77,7 +69,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   </Button>
                 </div>
               </TableCell>
-            </ExpandableRow>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon, Plus } from 'lucide-react';
@@ -19,7 +18,6 @@ export const CreateCampaignDialog: React.FC = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [level, setLevel] = useState<'dms' | 'profile'>('dms');
-  const [remarks, setRemarks] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -112,17 +110,6 @@ export const CreateCampaignDialog: React.FC = () => {
                 <SelectItem value="profile">Profile Level</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="grid gap-2">
-            <Label htmlFor="remarks">Remarks</Label>
-            <Textarea
-              id="remarks"
-              placeholder="Add any remarks for this campaign..."
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-              rows={3}
-            />
           </div>
         </div>
         
