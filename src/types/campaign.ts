@@ -18,7 +18,7 @@ export interface CampaignPool {
   poolName: string;
   gifts: string[];
   filtersApplied: string;
-  filterDetails: FilterCriteria;
+  filterDetails?: FilterCriteria;
   donorCount: number;
   remarks: string;
   deliveryMethod: 'hand-delivery' | 'dispatch-bhishma';
