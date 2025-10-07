@@ -1,4 +1,6 @@
-import { Campaign } from '@/types/campaign';
+import { Campaign, CampaignScenario } from '@/types/campaign';
+
+export { generateScenarios } from './scenarioData';
 
 export const generateCampaigns = (): Campaign[] => {
   return [

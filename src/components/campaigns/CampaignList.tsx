@@ -6,6 +6,7 @@ import { Eye, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 import { Campaign } from '@/types/campaign';
 import { useNavigate } from 'react-router-dom';
+import { ExpandableRow } from './ExpandableRow';
 
 interface CampaignListProps {
   campaigns: Campaign[];
@@ -23,6 +24,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-8"></TableHead>
             <TableHead>Campaign Name</TableHead>
             <TableHead>Festival Date</TableHead>
             <TableHead>Start Date</TableHead>
@@ -35,7 +37,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
         </TableHeader>
         <TableBody>
           {campaigns.map((campaign) => (
-            <TableRow key={campaign.id}>
+            <ExpandableRow key={campaign.id} pools={campaign.pools} colSpan={9}>
               <TableCell className="font-medium">{campaign.name}</TableCell>
               <TableCell>
                 {campaign.festivalDate ? format(campaign.festivalDate, 'dd MMM yyyy') : '-'}
@@ -52,7 +54,10 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/campaigns/${campaign.id}/pool`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/campaigns/${campaign.id}/pool`);
+                    }}
                     className="border-primary text-primary hover:bg-gray-50"
                   >
                     <Eye className="h-4 w-4 mr-1" />
@@ -61,7 +66,10 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/campaigns/${campaign.id}/filters`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/campaigns/${campaign.id}/filters`);
+                    }}
                     className="border-primary text-primary hover:bg-gray-50"
                   >
                     <Edit className="h-4 w-4 mr-1" />
@@ -69,7 +77,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ campaigns }) => {
                   </Button>
                 </div>
               </TableCell>
-            </TableRow>
+            </ExpandableRow>
           ))}
         </TableBody>
       </Table>

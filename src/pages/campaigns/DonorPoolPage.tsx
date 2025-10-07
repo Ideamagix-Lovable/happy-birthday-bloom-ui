@@ -4,6 +4,8 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StatCard } from '@/components/campaigns/StatCard';
+import { PoolDetailsTable } from '@/components/campaigns/PoolDetailsTable';
+import { ProductInventoryTable } from '@/components/campaigns/ProductInventoryTable';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -36,6 +38,57 @@ const DonorPoolPage = () => {
     protocol3: 0,
   });
   const { id } = useParams();
+
+  // Sample pool data
+  const samplePools = [
+    {
+      id: '1',
+      poolName: 'Pool 1 - High Value Donors',
+      gifts: ['Gift A', 'Gift B', 'Premium Box'],
+      filtersApplied: 'Donation Amount: >₹1,00,000 AND Last Donation: Last 90 days',
+      filterDetails: {} as any,
+      donorCount: 12500,
+      remarks: 'Premium segment for high-value donors',
+      deliveryMethod: 'hand-delivery' as const,
+      createdAt: new Date(),
+    },
+    {
+      id: '2',
+      poolName: 'Pool 2 - Mid-Tier Donors',
+      gifts: ['Gift C', 'Standard Box'],
+      filtersApplied: 'Donation Amount: ₹25,000-₹1,00,000 AND Category: Goloka, Swarga',
+      filterDetails: {} as any,
+      donorCount: 18000,
+      remarks: 'Standard gifts for mid-tier segment',
+      deliveryMethod: 'dispatch-bhishma' as const,
+      createdAt: new Date(),
+    },
+  ];
+
+  // Sample product inventory data
+  const sampleProducts = [
+    {
+      id: '1',
+      productName: 'Gift A - Premium Hamper',
+      totalInventory: 15000,
+      assignedInventory: 8500,
+      availableInventory: 6500,
+    },
+    {
+      id: '2',
+      productName: 'Gift B - Deluxe Box',
+      totalInventory: 20000,
+      assignedInventory: 12000,
+      availableInventory: 8000,
+    },
+    {
+      id: '3',
+      productName: 'Gift C - Standard Package',
+      totalInventory: 30000,
+      assignedInventory: 22000,
+      availableInventory: 8000,
+    },
+  ];
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -279,6 +332,26 @@ const DonorPoolPage = () => {
             </CardContent>
           </Card>
 
+          {/* Pool Details */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Campaign Pools</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <PoolDetailsTable pools={samplePools} />
+            </CardContent>
+          </Card>
+
+          {/* Product Inventory */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Product Inventory</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ProductInventoryTable products={sampleProducts} />
+            </CardContent>
+          </Card>
+
           {/* Action Buttons */}
           <div className="flex gap-4">
             <Button 
@@ -294,7 +367,7 @@ const DonorPoolPage = () => {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              Assign Gift and Create Dispatched
+              Create Dispatch
             </Button>
           </div>
 
