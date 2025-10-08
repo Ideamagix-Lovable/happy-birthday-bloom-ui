@@ -12,7 +12,6 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-
 export const CreateCampaignDialog: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
@@ -21,28 +20,21 @@ export const CreateCampaignDialog: React.FC = () => {
   const [level, setLevel] = useState<'dms' | 'profile'>('dms');
   const [remarks, setRemarks] = useState('');
   const navigate = useNavigate();
-
   const handleSubmit = () => {
     if (!name || !startDate || !endDate) {
       toast.error('Please fill all required fields');
       return;
     }
-
     toast.success('Campaign created successfully!');
     setOpen(false);
-    
+
     // Navigate to filter page
     const campaignId = Date.now().toString();
     navigate(`/campaigns/${campaignId}/filters`);
   };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
+  return <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="lg" className="gap-2 border-primary text-primary hover:bg-gray-50">
-          <Plus className="h-5 w-5" />
-          Create Campaign
-        </Button>
+        
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
@@ -51,25 +43,14 @@ export const CreateCampaignDialog: React.FC = () => {
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Campaign Name</Label>
-            <Input
-              id="name"
-              placeholder="e.g., Diwali 2025 Campaign"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Input id="name" placeholder="e.g., Diwali 2025 Campaign" value={name} onChange={e => setName(e.target.value)} />
           </div>
 
           <div className="grid gap-2">
             <Label>Start Date</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    'justify-start text-left font-normal',
-                    !startDate && 'text-muted-foreground'
-                  )}
-                >
+                <Button variant="outline" className={cn('justify-start text-left font-normal', !startDate && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {startDate ? format(startDate, 'PPP') : <span>Pick a date</span>}
                 </Button>
@@ -84,13 +65,7 @@ export const CreateCampaignDialog: React.FC = () => {
             <Label>End Date</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    'justify-start text-left font-normal',
-                    !endDate && 'text-muted-foreground'
-                  )}
-                >
+                <Button variant="outline" className={cn('justify-start text-left font-normal', !endDate && 'text-muted-foreground')}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {endDate ? format(endDate, 'PPP') : <span>Pick a date</span>}
                 </Button>
@@ -103,7 +78,7 @@ export const CreateCampaignDialog: React.FC = () => {
 
           <div className="grid gap-2">
             <Label>Campaign Level</Label>
-            <Select value={level} onValueChange={(val) => setLevel(val as 'dms' | 'profile')}>
+            <Select value={level} onValueChange={val => setLevel(val as 'dms' | 'profile')}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -116,13 +91,7 @@ export const CreateCampaignDialog: React.FC = () => {
 
           <div className="grid gap-2">
             <Label htmlFor="remarks">Remarks</Label>
-            <Textarea
-              id="remarks"
-              placeholder="Add any remarks for this campaign..."
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-              rows={3}
-            />
+            <Textarea id="remarks" placeholder="Add any remarks for this campaign..." value={remarks} onChange={e => setRemarks(e.target.value)} rows={3} />
           </div>
         </div>
         
@@ -135,6 +104,5 @@ export const CreateCampaignDialog: React.FC = () => {
           </Button>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
