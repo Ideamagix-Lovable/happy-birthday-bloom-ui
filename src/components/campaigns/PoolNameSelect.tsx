@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
@@ -33,6 +33,8 @@ export const PoolNameSelect: React.FC<PoolNameSelectProps> = ({
     }
   };
 
+  const pools = existingPools || [];
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -47,40 +49,42 @@ export const PoolNameSelect: React.FC<PoolNameSelectProps> = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0" align="start">
-        <Command shouldFilter={false}>
+        <Command>
           <CommandInput
             placeholder="Search or type new pool name..."
             value={searchValue}
             onValueChange={setSearchValue}
           />
-          <CommandEmpty>
-            {searchValue ? (
-              <div className="p-2">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start"
-                  onClick={handleCreateNew}
-                >
-                  Create "{searchValue}"
-                </Button>
-              </div>
-            ) : (
-              'No pool found.'
-            )}
-          </CommandEmpty>
-          <CommandGroup heading="Existing Pools">
-            {(existingPools || []).map((pool) => (
-              <CommandItem key={pool} onSelect={() => handleSelect(pool)}>
-                <Check
-                  className={cn(
-                    'mr-2 h-4 w-4',
-                    value === pool ? 'opacity-100' : 'opacity-0'
-                  )}
-                />
-                {pool}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandList>
+            <CommandEmpty>
+              {searchValue ? (
+                <div className="p-2">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={handleCreateNew}
+                  >
+                    Create "{searchValue}"
+                  </Button>
+                </div>
+              ) : (
+                'No pool found.'
+              )}
+            </CommandEmpty>
+            <CommandGroup heading="Existing Pools">
+              {pools.map((pool) => (
+                <CommandItem key={pool} onSelect={() => handleSelect(pool)}>
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === pool ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {pool}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Check, ChevronsUpDown, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -42,22 +42,24 @@ export const MultiSelectGifts: React.FC<MultiSelectGiftsProps> = ({ value, onCha
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" align="start">
-          <Command shouldFilter={false}>
+          <Command>
             <CommandInput placeholder="Search gifts..." />
-            <CommandEmpty>No gift found.</CommandEmpty>
-            <CommandGroup>
-              {(GIFTS || []).map((gift) => (
-                <CommandItem key={gift} onSelect={() => handleSelect(gift)}>
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value.includes(gift) ? 'opacity-100' : 'opacity-0'
-                    )}
-                  />
-                  {gift}
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            <CommandList>
+              <CommandEmpty>No gift found.</CommandEmpty>
+              <CommandGroup>
+                {GIFTS.map((gift) => (
+                  <CommandItem key={gift} onSelect={() => handleSelect(gift)}>
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        value.includes(gift) ? 'opacity-100' : 'opacity-0'
+                      )}
+                    />
+                    {gift}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
           </Command>
         </PopoverContent>
       </Popover>
