@@ -250,17 +250,17 @@ const CampaignFilterPage = () => {
             </div>
 
             <div className="space-y-2">
+              <Label>Select Gifts (Multiple) *</Label>
+              <MultiSelectGifts value={selectedGifts} onChange={setSelectedGifts} />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="remarks">Remarks</Label>
               <Textarea
                 id="remarks"
                 placeholder="Add any remarks for this pool..."
                 rows={3}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Select Gifts (Multiple) *</Label>
-              <MultiSelectGifts value={selectedGifts} onChange={setSelectedGifts} />
             </div>
 
           </div>
