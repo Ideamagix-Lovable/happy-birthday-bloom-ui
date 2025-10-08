@@ -68,19 +68,21 @@ export const PoolNameSelect: React.FC<PoolNameSelectProps> = ({
               'No pool found.'
             )}
           </CommandEmpty>
-          <CommandGroup heading="Existing Pools">
-            {existingPools.map((pool) => (
-              <CommandItem key={pool} onSelect={() => handleSelect(pool)}>
-                <Check
-                  className={cn(
-                    'mr-2 h-4 w-4',
-                    value === pool ? 'opacity-100' : 'opacity-0'
-                  )}
-                />
-                {pool}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          {existingPools && existingPools.length > 0 && (
+            <CommandGroup heading="Existing Pools">
+              {existingPools.map((pool) => (
+                <CommandItem key={pool} onSelect={() => handleSelect(pool)}>
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === pool ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {pool}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
         </Command>
       </PopoverContent>
     </Popover>
