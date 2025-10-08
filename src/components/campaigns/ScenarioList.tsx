@@ -21,11 +21,11 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({ scenarios }) => {
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
 
   const handleView = (scenarioId: string) => {
-    navigate(`/campaigns/planning/${scenarioId}/view`);
+    navigate(`/campaigns/${scenarioId}/pool`);
   };
 
   const handleEdit = (scenarioId: string) => {
-    navigate(`/campaigns/planning/${scenarioId}/edit`);
+    navigate(`/campaigns/${scenarioId}/filters`);
   };
 
   const handleActivateClick = (scenarioId: string) => {

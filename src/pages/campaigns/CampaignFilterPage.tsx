@@ -12,6 +12,8 @@ import { FilterControls } from '@/components/campaigns/FilterControls';
 import { SavedFilters } from '@/components/campaigns/SavedFilters';
 import { DonorViewOptions } from '@/components/campaigns/DonorViewOptions';
 import { AddFilterParameterDialog } from '@/components/campaigns/AddFilterParameterDialog';
+import { MultiSelectGifts } from '@/components/campaigns/MultiSelectGifts';
+import { PoolNameSelect } from '@/components/campaigns/PoolNameSelect';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -28,9 +30,17 @@ const CampaignFilterPage = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [donors, setDonors] = useState(getRandomDonorSample(10));
   const [donorView, setDonorView] = useState<DonorViewType>('all');
-  const [campaignLabel, setCampaignLabel] = useState('');
+  const [poolName, setPoolName] = useState('');
+  const [selectedGifts, setSelectedGifts] = useState<string[]>([]);
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // Sample existing pools
+  const samplePools = [
+    'Pool 1 - High Value Donors',
+    'Pool 2 - Mid-Tier Donors',
+    'Pool 3 - New Donors'
+  ];
 
   // Calculate donor view counts
   const totalDonors = donorCount || 45234;
@@ -217,12 +227,11 @@ const CampaignFilterPage = () => {
           </AlertDialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="pool-name">Pool Name</Label>
-              <Input
-                id="pool-name"
-                placeholder="Enter pool name"
-                value={campaignLabel}
-                onChange={(e) => setCampaignLabel(e.target.value)}
+              <Label htmlFor="pool-name">Pool Name *</Label>
+              <PoolNameSelect
+                value={poolName}
+                onChange={setPoolName}
+                existingPools={samplePools}
               />
             </div>
 
@@ -247,6 +256,11 @@ const CampaignFilterPage = () => {
                 placeholder="Add any remarks for this pool..."
                 rows={3}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Select Gifts (Multiple) *</Label>
+              <MultiSelectGifts value={selectedGifts} onChange={setSelectedGifts} />
             </div>
 
           </div>
