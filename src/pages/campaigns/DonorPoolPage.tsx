@@ -3,21 +3,24 @@ import Navigation from '@/components/Navigation';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { StatCard } from '@/components/campaigns/StatCard';
 import { PoolDetailsTable } from '@/components/campaigns/PoolDetailsTable';
 import { ProductInventoryTable } from '@/components/campaigns/ProductInventoryTable';
+import { MultiSelectGifts } from '@/components/campaigns/MultiSelectGifts';
+import { PoolNameSelect } from '@/components/campaigns/PoolNameSelect';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { Users, UserCheck, UserX, Gift, Package, Box } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { useParams } from 'react-router-dom';
 import { getRandomDonorCount } from '@/utils/campaignData';
 import { generateDonors } from '@/utils/donorData';
-import { GIFT_PROTOCOLS } from '@/types/campaign';
 import { format } from 'date-fns';
 
 const DonorPoolPage = () => {
@@ -26,9 +29,11 @@ const DonorPoolPage = () => {
   const [showAssignDialog, setShowAssignDialog] = useState(false);
   const [showRevokeDialog, setShowRevokeDialog] = useState(false);
   const [showDispatchDialog, setShowDispatchDialog] = useState(false);
-  const [selectedProtocol, setSelectedProtocol] = useState<string>('');
-  const [campaignLabel, setCampaignLabel] = useState<string>('');
+  const [selectedGifts, setSelectedGifts] = useState<string[]>([]);
+  const [poolName, setPoolName] = useState<string>('');
+  const [poolRemarks, setPoolRemarks] = useState<string>('');
   const [selectedDonors, setSelectedDonors] = useState<string[]>([]);
+  const [selectedPool, setSelectedPool] = useState<string>('all');
   const [stats, setStats] = useState({
     total: 45678,
     assigned: 0,
@@ -141,42 +146,28 @@ const DonorPoolPage = () => {
     toast.success(`Found ${count.toLocaleString()} matching donors`);
   };
 
-  const handleAssignGift = () => {
-    if (selectedDonors.length === 0) {
-      setSelectedDonors(donors.slice(0, 5).map((d) => d.dmsId));
-    }
+  const handleAddToPool = () => {
     setShowAssignDialog(true);
   };
 
-  const handleConfirmAssign = () => {
-    if (!selectedProtocol) {
-      toast.error('Please select a gift protocol');
+  const handleConfirmAddToPool = () => {
+    if (!poolName) {
+      toast.error('Please enter or select a pool name');
       return;
     }
     
-    // Use filteredCount if available, otherwise selected donors, otherwise default to 5
-    const assignedCount = filteredCount || (selectedDonors.length > 0 ? selectedDonors.length : 5);
+    if (selectedGifts.length === 0) {
+      toast.error('Please select at least one gift');
+      return;
+    }
     
-    // Update stats based on selected protocol
-    setStats(prev => {
-      const newStats = { ...prev };
-      newStats.assigned += assignedCount;
-      newStats.unassigned -= assignedCount;
-      
-      if (selectedProtocol === 'protocol1') {
-        newStats.protocol1 += assignedCount;
-      } else if (selectedProtocol === 'protocol2') {
-        newStats.protocol2 += assignedCount;
-      } else if (selectedProtocol === 'protocol3') {
-        newStats.protocol3 += assignedCount;
-      }
-      
-      return newStats;
-    });
+    const assignedCount = filteredCount || (selectedDonors.length > 0 ? selectedDonors.length : 0);
     
-    toast.success(`Gift protocol assigned to ${assignedCount.toLocaleString()} donors`);
+    toast.success(`Added ${assignedCount.toLocaleString()} donors to ${poolName}`);
     setShowAssignDialog(false);
-    setSelectedProtocol('');
+    setPoolName('');
+    setSelectedGifts([]);
+    setPoolRemarks('');
     setSelectedDonors([]);
     setFilteredCount(null);
   };
@@ -210,104 +201,17 @@ const DonorPoolPage = () => {
             />
           </div>
 
-          {/* Additional Filters */}
+          {/* Product Inventory */}
           <Card>
             <CardHeader>
-              <CardTitle>Additional Filters</CardTitle>
+              <CardTitle>Product Inventory</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label>Priority Level</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="any">Any</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Donation Recency</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select recency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="30">Last 30 days</SelectItem>
-                      <SelectItem value="90">Last 90 days</SelectItem>
-                      <SelectItem value="180">Last 180 days</SelectItem>
-                      <SelectItem value="365">Last 1 year</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Previous Gifts</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Assigned Status</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="assigned">Assigned</SelectItem>
-                      <SelectItem value="unassigned">Unassigned</SelectItem>
-                      <SelectItem value="all">All</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Campaign Donors Label</Label>
-                  <Select value={campaignLabel} onValueChange={setCampaignLabel}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select label" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="diwali-2024">Diwali 2024</SelectItem>
-                      <SelectItem value="new-year-2025">New Year 2025</SelectItem>
-                      <SelectItem value="premium-donors">Premium Donors</SelectItem>
-                      <SelectItem value="vip-donors">VIP Donors</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Saved Filters</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select saved filter" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="high-value-donors">High Value Donors (12,345)</SelectItem>
-                      <SelectItem value="recent-active">Recent Active (8,920)</SelectItem>
-                      <SelectItem value="vip-segment">VIP Segment (2,450)</SelectItem>
-                      <SelectItem value="lapsed-donors">Lapsed Donors (5,123)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              <ProductInventoryTable products={sampleProducts} />
             </CardContent>
           </Card>
 
-          {/* Pool Details */}
+          {/* Campaign Pools */}
           <Card>
             <CardHeader>
               <CardTitle>Campaign Pools</CardTitle>
@@ -338,7 +242,7 @@ const DonorPoolPage = () => {
               Submit & Count
             </Button>
             <Button
-              onClick={handleAssignGift}
+              onClick={handleAddToPool}
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
@@ -352,31 +256,49 @@ const DonorPoolPage = () => {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Donor Pool</h3>
                 <div className="flex items-center gap-4">
-                  {filteredCount && (
-                    <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className="text-sm font-medium text-green-900">
-                        Found {filteredCount.toLocaleString()} matching donors
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={handleRevoke}
-                      disabled={selectedDonors.length === 0}
-                    >
-                      Revoke ({selectedDonors.length})
-                    </Button>
-                    <Button
-                      onClick={handleSendToDispatch}
-                      disabled={selectedDonors.length === 0}
-                    >
-                      Send to Dispatch ({selectedDonors.length})
-                    </Button>
+                  <div className="flex items-center gap-2">
+                    <Label>Filter by Pool:</Label>
+                    <Select value={selectedPool} onValueChange={setSelectedPool}>
+                      <SelectTrigger className="w-[250px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Pools</SelectItem>
+                        {samplePools.map((pool) => (
+                          <SelectItem key={pool.id} value={pool.id}>
+                            {pool.poolName}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between mb-4">
+                {filteredCount && (
+                  <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
+                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-sm font-medium text-green-900">
+                      Found {filteredCount.toLocaleString()} matching donors
+                    </span>
+                  </div>
+                )}
+                <div className="flex gap-2 ml-auto">
+                  <Button
+                    variant="outline"
+                    onClick={handleRevoke}
+                    disabled={selectedDonors.length === 0}
+                  >
+                    Revoke ({selectedDonors.length})
+                  </Button>
+                  <Button
+                    onClick={handleSendToDispatch}
+                    disabled={selectedDonors.length === 0}
+                  >
+                    Send to Dispatch ({selectedDonors.length})
+                  </Button>
                 </div>
               </div>
               <div className="border rounded-lg">
@@ -440,50 +362,66 @@ const DonorPoolPage = () => {
         </div>
       </div>
 
-      {/* Assign Gift Dialog */}
+      {/* Add to Pool Dialog */}
       <AlertDialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Assign Gift Protocol</AlertDialogTitle>
+            <AlertDialogTitle>Add Donors to Pool</AlertDialogTitle>
             <AlertDialogDescription>
-              Select a gift protocol to assign to the selected donors.
-              {selectedDonors.length > 0 && (
+              Configure pool settings and select gifts for the donors.
+              {filteredCount && (
                 <p className="mt-2 font-semibold">
-                  Selected Donors: {selectedDonors.length}
+                  Adding {filteredCount.toLocaleString()} donors
                 </p>
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           
           <div className="space-y-4 py-4">
-            {filteredCount && (
-              <div className="p-3 bg-muted rounded-lg">
-                <p className="text-sm font-medium">
-                  Assigning to {filteredCount.toLocaleString()} filtered donors
-                </p>
-              </div>
-            )}
             <div className="space-y-2">
-              <Label>Gift Protocol</Label>
-              <Select value={selectedProtocol} onValueChange={setSelectedProtocol}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select protocol" />
-                </SelectTrigger>
-                <SelectContent>
-                  {GIFT_PROTOCOLS.map((protocol) => (
-                    <SelectItem key={protocol.id} value={protocol.id}>
-                      {protocol.name} - {protocol.description}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="pool-name">Pool Name *</Label>
+              <PoolNameSelect
+                value={poolName}
+                onChange={setPoolName}
+                existingPools={samplePools.map(p => p.poolName)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Overwrite/Skip Options</Label>
+              <div className="flex gap-4">
+                <label className="flex items-center space-x-2">
+                  <input type="radio" name="overwrite" value="overwrite" defaultChecked />
+                  <span className="text-sm">Overwrite existing donors</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="radio" name="overwrite" value="skip" />
+                  <span className="text-sm">Skip existing donors</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="remarks">Remarks</Label>
+              <Textarea
+                id="remarks"
+                placeholder="Add any remarks for this pool..."
+                value={poolRemarks}
+                onChange={(e) => setPoolRemarks(e.target.value)}
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Select Gifts (Multiple) *</Label>
+              <MultiSelectGifts value={selectedGifts} onChange={setSelectedGifts} />
             </div>
           </div>
 
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmAssign}>
-              Assign Protocol
+            <AlertDialogAction onClick={handleConfirmAddToPool}>
+              Add to Pool
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

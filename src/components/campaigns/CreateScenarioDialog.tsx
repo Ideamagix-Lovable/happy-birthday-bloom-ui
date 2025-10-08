@@ -6,15 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Plus, Trash2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CalendarIcon, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-
-interface Pool {
-  name: string;
-  description: string;
-}
 
 export const CreateScenarioDialog: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -22,25 +18,11 @@ export const CreateScenarioDialog: React.FC = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [festivalDate, setFestivalDate] = useState<Date>();
+  const [campaignLevel, setCampaignLevel] = useState<string>('');
   const [remarks, setRemarks] = useState('');
-  const [pools, setPools] = useState<Pool[]>([{ name: '', description: '' }]);
-
-  const addPool = () => {
-    setPools([...pools, { name: '', description: '' }]);
-  };
-
-  const removePool = (index: number) => {
-    setPools(pools.filter((_, i) => i !== index));
-  };
-
-  const updatePool = (index: number, field: 'name' | 'description', value: string) => {
-    const newPools = [...pools];
-    newPools[index][field] = value;
-    setPools(newPools);
-  };
 
   const handleSubmit = () => {
-    if (!name || !startDate || !endDate) {
+    if (!name || !startDate || !endDate || !campaignLevel) {
       toast.error('Please fill all required fields');
       return;
     }
@@ -52,8 +34,8 @@ export const CreateScenarioDialog: React.FC = () => {
     setStartDate(undefined);
     setEndDate(undefined);
     setFestivalDate(undefined);
+    setCampaignLevel('');
     setRemarks('');
-    setPools([{ name: '', description: '' }]);
   };
 
   return (
@@ -145,41 +127,16 @@ export const CreateScenarioDialog: React.FC = () => {
           </div>
 
           <div className="grid gap-2">
-            <div className="flex items-center justify-between">
-              <Label>Pools</Label>
-              <Button type="button" variant="outline" size="sm" onClick={addPool}>
-                <Plus className="h-4 w-4 mr-1" />
-                Add Pool
-              </Button>
-            </div>
-            <div className="space-y-3">
-              {pools.map((pool, index) => (
-                <div key={index} className="flex gap-2 items-start p-3 border rounded-lg">
-                  <div className="flex-1 space-y-2">
-                    <Input
-                      placeholder="Pool name (e.g., Pool 1 - Donors >1lac)"
-                      value={pool.name}
-                      onChange={(e) => updatePool(index, 'name', e.target.value)}
-                    />
-                    <Input
-                      placeholder="Description (e.g., Donors donated > 1lac)"
-                      value={pool.description}
-                      onChange={(e) => updatePool(index, 'description', e.target.value)}
-                    />
-                  </div>
-                  {pools.length > 1 && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removePool(index)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
+            <Label htmlFor="campaign-level">Campaign Level *</Label>
+            <Select value={campaignLevel} onValueChange={setCampaignLevel}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select campaign level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="dms">DMS Level</SelectItem>
+                <SelectItem value="profile">Profile Level</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid gap-2">

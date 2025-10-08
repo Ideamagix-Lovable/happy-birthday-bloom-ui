@@ -34,7 +34,7 @@ export const DonorViewOptions: React.FC<DonorViewOptionsProps> = ({
           selectedView === 'campaign' && 'bg-primary text-primary-foreground'
         )}
       >
-        Campaign Donors ({counts.campaign.toLocaleString()})
+        Already in Campaign ({counts.campaign.toLocaleString()})
       </Button>
       <Button
         variant={selectedView === 'not-campaign' ? 'default' : 'outline'}
@@ -44,7 +44,7 @@ export const DonorViewOptions: React.FC<DonorViewOptionsProps> = ({
           selectedView === 'not-campaign' && 'bg-primary text-primary-foreground'
         )}
       >
-        Not Campaign Donors ({counts.notCampaign.toLocaleString()})
+        Not in Campaign ({counts.notCampaign.toLocaleString()})
       </Button>
     </div>
   );

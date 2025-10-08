@@ -158,7 +158,7 @@ const CampaignFilterPage = () => {
             <AccordionItem value="preview" className="border rounded-lg bg-white">
               <AccordionTrigger className="px-6 hover:no-underline">
                 <div className="flex items-center justify-between w-full pr-4">
-                  <h3 className="text-lg font-semibold">Donor Preview (Sample)</h3>
+                  <h3 className="text-lg font-semibold">Donor Data Matching Filters</h3>
                   <div onClick={(e) => e.stopPropagation()}>
                     <DonorViewOptions
                       selectedView={donorView}
@@ -249,34 +249,6 @@ const CampaignFilterPage = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="gifts">Select Gifts (Multiple)</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select gifts" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="gift1">Gift A</SelectItem>
-                  <SelectItem value="gift2">Gift B</SelectItem>
-                  <SelectItem value="gift3">Gift C</SelectItem>
-                  <SelectItem value="gift4">Gift D</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Cultivator Option</Label>
-              <div className="flex gap-4">
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="delivery" value="hand-delivery" defaultChecked />
-                  <span className="text-sm">Hand Delivery</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="radio" name="delivery" value="dispatch-bhishma" />
-                  <span className="text-sm">Dispatch by Bhishma</span>
-                </label>
-              </div>
-            </div>
           </div>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
