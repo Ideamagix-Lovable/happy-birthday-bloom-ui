@@ -1,4 +1,6 @@
-import { Campaign } from '@/types/campaign';
+import { Campaign, CampaignScenario } from '@/types/campaign';
+
+export { generateScenarios } from './scenarioData';
 
 export const generateCampaigns = (): Campaign[] => {
   return [
@@ -13,6 +15,39 @@ export const generateCampaigns = (): Campaign[] => {
       donorCount: 45678,
       assignedCount: 45678,
       createdAt: new Date('2024-10-01'),
+      remarks: 'Complete Diwali campaign with multiple donor segments',
+      pools: [
+        {
+          id: 'p1-1',
+          poolName: 'Premium Donors Pool',
+          gifts: ['Premium Gift Box', 'Diwali Sweets', 'Decorative Items'],
+          filtersApplied: 'Donation Amount > ₹1,00,000 AND Last Donation < 6 months',
+          donorCount: 12500,
+          remarks: 'High-value donors with recent engagement',
+          deliveryMethod: 'hand-delivery',
+          createdAt: new Date('2024-10-01'),
+        },
+        {
+          id: 'p1-2',
+          poolName: 'Regular Donors Pool',
+          gifts: ['Standard Gift Box', 'Sweets'],
+          filtersApplied: 'Donation Amount ₹25,000 - ₹1,00,000 AND Active in last year',
+          donorCount: 23178,
+          remarks: 'Consistent donors with moderate contribution',
+          deliveryMethod: 'dispatch-bhishma',
+          createdAt: new Date('2024-10-02'),
+        },
+        {
+          id: 'p1-3',
+          poolName: 'New Donors Pool',
+          gifts: ['Welcome Gift', 'Sweets'],
+          filtersApplied: 'First Donation in last 3 months AND Donation Amount > ₹10,000',
+          donorCount: 10000,
+          remarks: 'First-time donors to build relationship',
+          deliveryMethod: 'dispatch-bhishma',
+          createdAt: new Date('2024-10-03'),
+        },
+      ],
     },
     {
       id: '2',
@@ -25,6 +60,29 @@ export const generateCampaigns = (): Campaign[] => {
       donorCount: 32450,
       assignedCount: 32450,
       createdAt: new Date('2024-08-01'),
+      remarks: 'Janmashtami festival campaign',
+      pools: [
+        {
+          id: 'p2-1',
+          poolName: 'VIP Donors',
+          gifts: ['Special Janmashtami Gift', 'Premium Sweets', 'Krishna Idol'],
+          filtersApplied: 'Donation Amount > ₹2,00,000 AND Donor Age > 3 years',
+          donorCount: 8450,
+          remarks: 'Long-term high-value donors',
+          deliveryMethod: 'hand-delivery',
+          createdAt: new Date('2024-08-05'),
+        },
+        {
+          id: 'p2-2',
+          poolName: 'Standard Donors',
+          gifts: ['Janmashtami Gift', 'Sweets'],
+          filtersApplied: 'Donation Amount ₹50,000 - ₹2,00,000',
+          donorCount: 24000,
+          remarks: 'Regular contributors',
+          deliveryMethod: 'dispatch-bhishma',
+          createdAt: new Date('2024-08-06'),
+        },
+      ],
     },
     {
       id: '3',
@@ -37,6 +95,29 @@ export const generateCampaigns = (): Campaign[] => {
       donorCount: 28900,
       assignedCount: 15200,
       createdAt: new Date('2025-02-15'),
+      remarks: 'Active Holi campaign in progress',
+      pools: [
+        {
+          id: 'p3-1',
+          poolName: 'Top Tier Pool',
+          gifts: ['Holi Special Gift', 'Organic Colors', 'Sweets'],
+          filtersApplied: 'Donation Amount > ₹1,50,000 AND Location: Mumbai, Delhi',
+          donorCount: 15200,
+          remarks: 'Metropolitan high-value donors',
+          deliveryMethod: 'hand-delivery',
+          createdAt: new Date('2025-02-20'),
+        },
+        {
+          id: 'p3-2',
+          poolName: 'General Pool',
+          gifts: ['Holi Gift', 'Colors'],
+          filtersApplied: 'Donation Amount ₹30,000 - ₹1,50,000',
+          donorCount: 13700,
+          remarks: 'Pending assignment',
+          deliveryMethod: 'dispatch-bhishma',
+          createdAt: new Date('2025-02-22'),
+        },
+      ],
     },
     {
       id: '4',
@@ -49,6 +130,8 @@ export const generateCampaigns = (): Campaign[] => {
       donorCount: 0,
       assignedCount: 0,
       createdAt: new Date('2025-03-10'),
+      remarks: 'Draft campaign - pools not yet configured',
+      pools: [],
     },
   ];
 };

@@ -9,6 +9,40 @@ export interface Campaign {
   donorCount: number;
   assignedCount: number;
   createdAt: Date;
+  remarks?: string;
+  pools?: CampaignPool[];
+}
+
+export interface CampaignPool {
+  id: string;
+  poolName: string;
+  gifts: string[];
+  filtersApplied: string;
+  filterDetails?: FilterCriteria;
+  donorCount: number;
+  remarks: string;
+  deliveryMethod: 'hand-delivery' | 'dispatch-bhishma';
+  createdAt: Date;
+}
+
+export interface CampaignScenario {
+  id: string;
+  name: string;
+  festivalDate?: Date;
+  startDate: Date;
+  endDate: Date;
+  status: 'active' | 'inactive';
+  pools: CampaignPool[];
+  remarks: string;
+  createdAt: Date;
+}
+
+export interface ProductInventory {
+  id: string;
+  productName: string;
+  totalInventory: number;
+  assignedInventory: number;
+  availableInventory: number;
 }
 
 export interface FilterCriteria {

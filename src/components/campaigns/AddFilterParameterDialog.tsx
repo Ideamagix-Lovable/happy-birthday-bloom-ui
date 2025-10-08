@@ -45,6 +45,14 @@ export const AddFilterParameterDialog = () => {
   const selectedParamData = availableParameters.find(p => p.id === selectedParameter);
   const availableConditions = selectedParamData ? conditions[selectedParamData.type as keyof typeof conditions] : [];
 
+  // Reset selected parameter if it's not in filtered results
+  React.useEffect(() => {
+    if (selectedParameter && !filteredParameters.find(p => p.id === selectedParameter)) {
+      setSelectedParameter('');
+      setSelectedCondition('');
+    }
+  }, [searchQuery, selectedParameter, filteredParameters]);
+
   const handleAddParameter = () => {
     if (!selectedParameter || !selectedCondition) {
       toast.error('Please select both parameter and condition');
