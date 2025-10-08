@@ -208,31 +208,6 @@ const DonorPoolPage = () => {
               value={stats.total.toLocaleString()}
               icon={Users}
             />
-            <StatCard
-              title="Total Donors Assigned"
-              value={stats.assigned.toLocaleString()}
-              icon={UserCheck}
-            />
-            <StatCard
-              title="Total Donors Unassigned"
-              value={stats.unassigned.toLocaleString()}
-              icon={UserX}
-            />
-            <StatCard
-              title="Donors in Protocol 1"
-              value={stats.protocol1.toLocaleString()}
-              icon={Gift}
-            />
-            <StatCard
-              title="Donors in Protocol 2"
-              value={stats.protocol2.toLocaleString()}
-              icon={Package}
-            />
-            <StatCard
-              title="Donors in Protocol 3"
-              value={stats.protocol3.toLocaleString()}
-              icon={Box}
-            />
           </div>
 
           {/* Additional Filters */}

@@ -21,9 +21,8 @@ const CampaignDashboard = () => {
             <h1 className="text-2xl font-bold text-gray-900">Donor Gift Campaigns</h1>
             <div className="flex gap-3">
               <Button
-                variant="outline"
                 onClick={() => navigate('/campaigns/planning')}
-                className="gap-2 border-secondary text-secondary hover:bg-gray-50"
+                className="gap-2"
               >
                 <Lightbulb className="h-5 w-5" />
                 Campaign Planning
