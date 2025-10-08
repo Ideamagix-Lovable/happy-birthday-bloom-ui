@@ -42,24 +42,22 @@ export const MultiSelectGifts: React.FC<MultiSelectGiftsProps> = ({ value, onCha
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0" align="start">
-          <Command>
+          <Command shouldFilter={false}>
             <CommandInput placeholder="Search gifts..." />
             <CommandEmpty>No gift found.</CommandEmpty>
-            {GIFTS && GIFTS.length > 0 && (
-              <CommandGroup>
-                {GIFTS.map((gift) => (
-                  <CommandItem key={gift} onSelect={() => handleSelect(gift)}>
-                    <Check
-                      className={cn(
-                        'mr-2 h-4 w-4',
-                        value.includes(gift) ? 'opacity-100' : 'opacity-0'
-                      )}
-                    />
-                    {gift}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            )}
+            <CommandGroup>
+              {(GIFTS || []).map((gift) => (
+                <CommandItem key={gift} onSelect={() => handleSelect(gift)}>
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value.includes(gift) ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {gift}
+                </CommandItem>
+              ))}
+            </CommandGroup>
           </Command>
         </PopoverContent>
       </Popover>
